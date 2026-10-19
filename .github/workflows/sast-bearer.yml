@@ -1,0 +1,53 @@
+name: SAST con Bearer # Nombre visible en GitHub Actions.
+on: # Eventos que ejecutan el laboratorio.
+  push: # Analiza los cambios integrados en la rama principal.
+    branches: [main] # Restringe push a main.
+  pull_request: # Analiza propuestas antes de integrarlas.
+    branches: [main] # Solo PR cuyo destino sea main.
+  workflow_dispatch: {} # Permite ejecutarlo manualmente desde Actions.
+permissions: # Aplica los permisos mínimos al token del workflow.
+  contents: read # Permite descargar el código del repositorio.
+  security-events: write # Permite publicar los resultados SARIF.
+jobs: # Agrupa los trabajos de la ejecución.
+  sast: # Identificador del trabajo de análisis.
+    name: Bearer SAST # Etiqueta visible del trabajo.
+    runs-on: ubuntu-24.04 # Proporciona un ejecutor Linux compatible con Bearer.
+    timeout-minutes: 20 # Limita la duración de una ejecución atascada.
+    steps: # Ejecuta secuencialmente los pasos del laboratorio.
+      - name: Descargar código # Recupera el código del commit o PR analizado.
+        uses: actions/checkout@v4 # Acción oficial para descargar el repositorio.
+      - name: Crear carpeta de reportes # Prepara el destino de los resultados.
+        run: mkdir -p reports # Crea la carpeta aunque ya exista.
+      - name: Analizar todo el repositorio y generar SARIF # Mantiene una línea base completa.
+        uses: bearer/bearer-action@v2 # Instala y ejecuta la integración oficial de Bearer.
+        with: # Configura los argumentos del análisis SAST.
+          version: '2.1.2' # Usa la misma versión comprobada localmente.
+          path: . # Analiza el repositorio completo, sin modo diferencial.
+          skip-path: test,frontend/src/test,cypress,node_modules,reports # Excluye pruebas, dependencias y resultados.
+          format: sarif # Produce SARIF compatible con GitHub Code scanning.
+          output: reports/bearer.sarif # Guarda el archivo que se publicará en Security.
+          exit-code: '0' # Los hallazgos no impiden que se publiquen los reportes.
+      - name: Generar reporte HTML # Crea la segunda salida solicitada en la tarea.
+        if: always() # Intenta generar HTML aunque falle un paso anterior.
+        uses: bearer/bearer-action@v2 # Ejecuta de nuevo Bearer con la salida HTML.
+        with: # Conserva el mismo alcance para poder comparar resultados.
+          version: '2.1.2' # Fija la misma versión de Bearer.
+          path: . # Mantiene el análisis del repositorio completo.
+          skip-path: test,frontend/src/test,cypress,node_modules,reports # Mantiene las mismas exclusiones.
+          format: html # Produce el reporte navegable solicitado.
+          output: reports/bearer.html # Guarda el HTML en la carpeta de reportes.
+          exit-code: '0' # Permite publicar el HTML aunque haya vulnerabilidades.
+      - name: Publicar hallazgos en Code scanning # Convierte el SARIF en alertas de GitHub.
+        if: always() # La carga no se omite por fallos previos ni hallazgos.
+        uses: github/codeql-action/upload-sarif@v4 # Acción oficial de GitHub para cargar SARIF.
+        with: # Indica qué resultado y categoría publicar.
+          sarif_file: reports/bearer.sarif # Selecciona el SARIF producido por Bearer.
+          category: bearer-sast # Usa una categoría estable para seguir las alertas entre commits.
+      - name: Guardar reportes descargables # Publica HTML y SARIF como evidencia de Actions.
+        if: always() # Intenta conservar la evidencia incluso si otra carga falla.
+        uses: actions/upload-artifact@v4 # Acción oficial para almacenar artefactos descargables.
+        with: # Configura el nombre, archivos y conservación del artefacto.
+          name: bearer-reports # Nombre que aparece en la página de la ejecución.
+          path: reports/ # Incluye el HTML y el SARIF sin agregarlos a Git.
+          if-no-files-found: error # Hace visible la ausencia de reportes por un fallo de ejecución.
+          retention-days: 30 # Conserva los reportes durante treinta días.
