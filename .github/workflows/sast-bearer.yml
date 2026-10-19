@@ -15,7 +15,7 @@ jobs: # Agrupa los trabajos de la ejecución.
     timeout-minutes: 20 # Limita la duración de una ejecución atascada.
     steps: # Ejecuta secuencialmente los pasos del laboratorio.
       - name: Descargar código # Recupera el código del commit o PR analizado.
-        uses: actions/checkout@v4 # Acción oficial para descargar el repositorio.
+        uses: actions/checkout@v7.0.1 # Acción oficial para descargar el repositorio.
       - name: Crear carpeta de reportes # Prepara el destino de los resultados.
         run: mkdir -p reports # Crea la carpeta aunque ya exista.
       - name: Analizar todo el repositorio y generar SARIF # Mantiene una línea base completa.
@@ -45,7 +45,7 @@ jobs: # Agrupa los trabajos de la ejecución.
           category: bearer-sast # Usa una categoría estable para seguir las alertas entre commits.
       - name: Guardar reportes descargables # Publica HTML y SARIF como evidencia de Actions.
         if: always() # Intenta conservar la evidencia incluso si otra carga falla.
-        uses: actions/upload-artifact@v4 # Acción oficial para almacenar artefactos descargables.
+        uses: actions/upload-artifact@v7.0.2 # Acción oficial para almacenar artefactos descargables.
         with: # Configura el nombre, archivos y conservación del artefacto.
           name: bearer-reports # Nombre que aparece en la página de la ejecución.
           path: reports/ # Incluye el HTML y el SARIF sin agregarlos a Git.
