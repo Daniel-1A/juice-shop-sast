@@ -14,6 +14,8 @@ Proyecto final de Diseño y Proceso de Seguridad en el Desarrollo de Software, U
 |---|---|
 | Madurez inicial | [Diagnóstico SAMM](security/madurez/samm-inicial.md) |
 | Diseño | [Arquitectura](security/dise%C3%B1o/arquitectura.md), [DFD](security/dise%C3%B1o/dfd.md), [clasificación de datos](security/dise%C3%B1o/clasificacion-datos.md), [requisitos ASVS](security/dise%C3%B1o/requisitos-asvs.md) |
+| Revisión SAST | [Análisis inicial de cinco alertas](security/sast/hallazgos-iniciales.md) |
+| Revisión SCA | [Primer SBOM y resultado de Grype](security/sca/resultado-inicial.md) |
 | Pipeline del avance | [Workflow](.github/workflows/devsecops.yml), [reglas de Semgrep](.semgrep/juice-shop-rules.yml), [política de bloqueo](security/politica-de-bloqueo.md) y [ejecuciones de Actions](https://github.com/Daniel-1A/juice-shop-sast/actions/workflows/devsecops.yml) |
 
 El workflow corre en PR hacia `main`. Los artefactos `reporte-semgrep` y `reporte-sca` contienen el SARIF, el SBOM CycloneDX y el reporte de Grype. Para SCA se resuelven dependencias npm de la raíz y de `frontend/` sin ejecutar scripts. El SBOM del avance describe esas dependencias resueltas en CI. El escaneo de la imagen Docker corresponde a la entrega final.
