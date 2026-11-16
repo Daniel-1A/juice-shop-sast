@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gate de licencias sobre un SBOM CycloneDX (JSON).
+"""Gate de licencias sobre un SBOM CycloneDX (JSON) leído desde stdin.
 
 BLOQUEA (exit 1): GPL, AGPL o SSPL según la política del proyecto.
 BLOQUEA (exit 1): inventario de componentes ausente o vacío.
@@ -24,9 +24,8 @@ def licencias(componente):
     return out
 
 
-def main(ruta):
-    with open(ruta, encoding="utf-8") as f:
-        sbom = json.load(f)
+def main():
+    sbom = json.load(sys.stdin.buffer)
     componentes = sbom.get("components")
     if not isinstance(componentes, list) or not componentes:
         print("::error title=SBOM inválido::Se esperaba un inventario de componentes no vacío.")
@@ -59,4 +58,4 @@ def main(ruta):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else "sbom.cdx.json"))
+    sys.exit(main())

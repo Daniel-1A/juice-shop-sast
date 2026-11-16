@@ -206,7 +206,7 @@ jobs:
 
       - name: Gate de licencias
         if: always() && steps.sbom.outcome == 'success'
-        run: python3 .github/scripts/check-licenses.py sbom.cdx.json
+        run: python3 .github/scripts/check-licenses.py < sbom.cdx.json
 
       - name: Subir SARIF a Code Scanning
         if: always() && hashFiles('grype.sarif') != ''
