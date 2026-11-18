@@ -65,7 +65,7 @@ void describe('/api/Feedbacks', () => {
           captcha: captchaRes.body.answer
         })
       assert.equal(res.status, 201)
-      assert.equal(res.body.data.comment, 'The sanitize-html module up to at least version 1.4.2 has this issue: <iframe src="javascript:alert(`xss`)">')
+      assert.equal(res.body.data.comment, 'The sanitize-html module up to at least version 1.4.2 has this issue: &lt;iframe src="javascript:alert(`xss`)"&gt;')
     })
   }
 
