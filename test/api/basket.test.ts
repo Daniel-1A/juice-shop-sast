@@ -61,6 +61,16 @@ void describe('/rest/basket/:id', () => {
     assert.equal(res.body.data.Products.length, 3)
   })
 
+  void it('GET basket rejects a token after its user is deleted', async () => {
+    const { UserModel } = await import('../../models/user')
+    const user = await UserModel.create({ email: 'revocation@example.invalid', password: 'Test-revocation-123' })
+    const token = security.authorize({ data: { id: user.id } })
+    const before = await request(app).get('/rest/basket/1').set('Authorization', 'Bearer ' + token)
+    assert.equal(before.status, 200)
+    await user.destroy()
+    const after = await request(app).get('/rest/basket/1').set('Authorization', 'Bearer ' + token)
+    assert.equal(after.status, 401)
+  })
   void it('GET basket should reject forged JWTs', async () => {
     const header = Buffer.from(JSON.stringify({ alg: 'none', typ: 'JWT' })).toString('base64url')
     const payload = Buffer.from(JSON.stringify({ data: { email: 'jim@juice-sh.op' }, iat: 1508639612, exp: 9999999999 })).toString('base64url')

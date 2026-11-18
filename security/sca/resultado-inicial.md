@@ -16,3 +16,5 @@ Las coincidencias representan pares de aviso y versión detectada. Para decidir 
 ## Correcciones para integrar el avance
 
 Se actualizaron jsonwebtoken a 8.5.1 y express-jwt a 6.1.2 con algoritmos explicitos. Se resolvieron crypto-js 4.2.0 bajo pdfkit, sanitize-html 1.27.5, compatible con lodash corregido y tar 7.5.19 bajo sqlite3 mediante actualizaciones y overrides npm. La verificacion del backend ejecuta 414 pruebas correctas y omite cinco. Los retos que esperaban tokens sin firma ahora comprueban su rechazo.
+
+La verificacion posterior incluye 546 pruebas de API correctas y seis omitidas por la suite. Una prueba confirma que el mismo token valido deja de autorizar acceso al eliminar la cuenta. El middleware deniega explicitamente las rutas cerradas y usa RS256 para autenticar.
