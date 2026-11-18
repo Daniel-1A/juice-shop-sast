@@ -12,3 +12,7 @@ Grype 0.118.0 registró nueve coincidencias críticas en el reporte completo. Se
 | `tar` | 6.2.1 | 1 |
 
 Las coincidencias representan pares de aviso y versión detectada. Para decidir una corrección, se debe identificar la ruta de dependencia, verificar si se usa en tiempo de ejecución y ejecutar pruebas de regresión. El inventario de esta fase se genera a partir de npm antes de construir la imagen.
+
+## Correcciones para integrar el avance
+
+Se actualizaron jsonwebtoken a 8.5.1 y express-jwt a 6.1.2 con algoritmos explicitos. Se resolvieron crypto-js 4.2.0 bajo pdfkit, lodash 4.17.23 bajo sanitize-html y tar 7.5.19 bajo sqlite3 mediante overrides npm. La verificacion del backend ejecuta 414 pruebas correctas y omite cinco. Los retos que esperaban tokens sin firma ahora comprueban su rechazo.

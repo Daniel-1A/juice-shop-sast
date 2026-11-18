@@ -279,20 +279,20 @@ void describe('verify', () => {
       challenges.jwtForgedChallenge = { solved: false, save, disabledEnv: 'Windows' } as unknown as Challenge
     })
 
-    void it('"jwtUnsignedChallenge" is solved when forged unsigned token has email jwtn3d@juice-sh.op in the payload', () => {
+    void it('"jwtUnsignedChallenge" remains unsolved when unsigned token has email jwtn3d@juice-sh.op in the payload', () => {
       req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQGp1aWNlLXNoLm9wIn0sImlhdCI6MTUwODYzOTYxMiwiZXhwIjo5OTk5OTk5OTk5fQ.' }
 
       verify.jwtChallenges()(req, res, next)
 
-      assert.equal(challenges.jwtUnsignedChallenge.solved, true)
+      assert.equal(challenges.jwtUnsignedChallenge.solved, false)
     })
 
-    void it('"jwtUnsignedChallenge" is solved when forged unsigned token has string "jwtn3d@" in the payload', () => {
+    void it('"jwtUnsignedChallenge" remains unsolved when unsigned token has string "jwtn3d@" in the payload', () => {
       req.headers = { authorization: 'Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJkYXRhIjp7ImVtYWlsIjoiand0bjNkQCJ9LCJpYXQiOjE1MDg2Mzk2MTIsImV4cCI6OTk5OTk5OTk5OX0.' }
 
       verify.jwtChallenges()(req, res, next)
 
-      assert.equal(challenges.jwtUnsignedChallenge.solved, true)
+      assert.equal(challenges.jwtUnsignedChallenge.solved, false)
     })
 
     void it('"jwtUnsignedChallenge" is not solved via regularly signed token even with email jwtn3d@juice-sh.op in the payload', () => {

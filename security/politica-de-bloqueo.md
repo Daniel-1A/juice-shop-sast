@@ -31,4 +31,4 @@ Configurar en *Settings → Rules → Rulesets* (o *Branches → Branch protecti
 
 | ID | Herramienta | Hallazgo | Componente | Justificación | VEX | Responsable | Revisar |
 |---|---|---|---|---|---|---|---|
-| Sin excepciones registradas | | | | | | | |
+| EXC-01 | Gitleaks | private-key, commit 0830475, linea 21 | lib/insecurity.ts | Llave ficticia de laboratorio ya publica en el commit base 779106b. El fingerprint limita la excepcion a esa copia historica. | Riesgo heredado del laboratorio | Daniel Martinez | 2026-12-02 |
