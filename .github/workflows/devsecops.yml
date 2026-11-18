@@ -245,6 +245,9 @@ jobs:
             --build-arg VCS_REF="${GITHUB_SHA}" \
             --build-arg BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
             -t juice-shop:${GITHUB_SHA} .
+          docker run --detach --name juice-shop-smoke --publish 127.0.0.1:3000:3000 juice-shop:${GITHUB_SHA}
+          trap 'docker logs juice-shop-smoke; docker rm -f juice-shop-smoke' EXIT
+          curl --fail --retry 30 --retry-delay 2 --retry-connrefused http://127.0.0.1:3000/ > /dev/null
           docker save juice-shop:${GITHUB_SHA} | gzip > imagen.tar.gz
 
       - name: Guardar imagen para los jobs iac y dast
