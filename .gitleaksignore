@@ -6,3 +6,6 @@
 66a82fc491f6c9fbe579376325fe0848801c46bc:test/server/verify.unit.test.ts:jwt:291
 66a82fc491f6c9fbe579376325fe0848801c46bc:test/server/verify.unit.test.ts:jwt:308
 66a82fc491f6c9fbe579376325fe0848801c46bc:test/server/verify.unit.test.ts:jwt:316
+# Contrasenas de cuentas ficticias de semilla usadas en pruebas de feedback.
+3dacd8a6bce91ef9ff716b86da24895e9594c553:test/api/feedback.test.ts:generic-api-key:117
+3dacd8a6bce91ef9ff716b86da24895e9594c553:test/api/feedback.test.ts:generic-api-key:143

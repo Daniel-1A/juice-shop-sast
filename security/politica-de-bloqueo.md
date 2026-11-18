@@ -34,3 +34,5 @@ Configurar en *Settings → Rules → Rulesets* (o *Branches → Branch protecti
 | EXC-01 | Gitleaks | private-key, commit 0830475, linea 21 | lib/insecurity.ts | Llave ficticia de laboratorio ya publica en el commit base 779106b. El fingerprint limita la excepcion a esa copia historica. | Riesgo heredado del laboratorio | Daniel Martinez | 2026-12-02 |
 
 EXC-02 cubre exclusivamente los cuatro fingerprints de tokens ficticios heredados en test/server/verify.unit.test.ts del commit 66a82fc. Son entradas negativas de pruebas de JWT. Responsable Daniel Martinez, revision 2026-12-02.
+
+EXC-03 identifica los dos fingerprints de contrasenas de cuentas de semilla heredadas en test/api/feedback.test.ts del commit 3dacd8a. Responsable Daniel Martinez, revision 2026-12-02.
