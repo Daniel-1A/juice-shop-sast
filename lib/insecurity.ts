@@ -6,7 +6,7 @@
 import fs from 'node:fs'
 import crypto from 'node:crypto'
 import { type Request, type Response, type NextFunction } from 'express'
-import { UserModel } from '@juice-shop/models/user'
+import { UserModel } from '../models/user'
 import expressJwt from 'express-jwt'
 import jwt from 'jsonwebtoken'
 import jws from 'jws'
