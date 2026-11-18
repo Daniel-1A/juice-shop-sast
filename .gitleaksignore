@@ -17,3 +17,5 @@ f47c13de937c77b83d18ccc9ffaf2902e76ec0c5:test/server/verify.unit.test.ts:jwt:308
 f47c13de937c77b83d18ccc9ffaf2902e76ec0c5:test/server/verify.unit.test.ts:jwt:316
 f47c13de937c77b83d18ccc9ffaf2902e76ec0c5:test/api/feedback.test.ts:generic-api-key:117
 f47c13de937c77b83d18ccc9ffaf2902e76ec0c5:test/api/feedback.test.ts:generic-api-key:143
+# Contrasena ficticia de prueba, reemplazada por generacion aleatoria.
+d01ec61bbb5c7dd485b14a74e5e8ec4b3abee27b:test/api/basket.test.ts:generic-api-key:66

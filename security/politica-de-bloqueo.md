@@ -38,3 +38,5 @@ EXC-02 cubre exclusivamente los cuatro fingerprints de tokens ficticios heredado
 EXC-03 identifica los dos fingerprints de contrasenas de cuentas de semilla heredadas en test/api/feedback.test.ts del commit 3dacd8a. Responsable Daniel Martinez, revision 2026-12-02.
 
 Las excepciones EXC-01 a EXC-03 incluyen tambien los fingerprints del commit f47c13d, que normaliza finales de linea sin cambiar los fixtures.
+
+EXC-04 cubre exclusivamente la contrasena ficticia de test/api/basket.test.ts:66 en el commit d01ec61. La prueba actual genera una contrasena aleatoria. Responsable Daniel Martinez, revision 2026-12-02.
