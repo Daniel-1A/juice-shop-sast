@@ -5,6 +5,7 @@
 
 import { describe, it, before } from 'node:test'
 import assert from 'node:assert/strict'
+import { randomUUID } from 'node:crypto'
 import request from 'supertest'
 import type { Express } from 'express'
 import config from 'config'
@@ -61,15 +62,25 @@ void describe('/rest/basket/:id', () => {
     assert.equal(res.body.data.Products.length, 3)
   })
 
-  void it('GET basket should accept forged JWTs', async () => {
+  void it('GET basket rejects a token after its user is deleted', async () => {
+    const { UserModel } = await import('../../models/user')
+    const user = await UserModel.create({ email: 'revocation@example.invalid', password: randomUUID() })
+    const token = security.authorize({ data: { id: user.id } })
+    const before = await request(app).get('/rest/basket/1').set('Authorization', 'Bearer ' + token)
+    assert.equal(before.status, 200)
+    await user.destroy()
+    const after = await request(app).get('/rest/basket/1').set('Authorization', 'Bearer ' + token)
+    assert.equal(after.status, 401)
+  })
+  void it('GET basket should reject forged JWTs', async () => {
     const header = Buffer.from(JSON.stringify({ alg: 'none', typ: 'JWT' })).toString('base64url')
     const payload = Buffer.from(JSON.stringify({ data: { email: 'jim@juice-sh.op' }, iat: 1508639612, exp: 9999999999 })).toString('base64url')
     const unsignedToken = `${header}.${payload}.`
     const res = await request(app)
       .get('/rest/basket/1')
       .set({ Authorization: 'Bearer ' + unsignedToken, 'content-type': 'application/json' })
-    assert.equal(res.status, 200)
-    assert.ok(res.headers['content-type']?.includes('application/json'))
+    assert.equal(res.status, 401)
+    assert.equal(res.body.data, undefined)
   })
 })
 

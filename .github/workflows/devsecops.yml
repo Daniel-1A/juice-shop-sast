@@ -1,0 +1,262 @@
+# Pipeline DevSecOps - OWASP Juice Shop (fork del equipo)
+# Avance (18-nov-2026): secretos + SAST + SCA + build.
+# Pendiente para la entrega final: iac, dast y publicación (Dependency-Track / DefectDojo).
+# Umbrales de bloqueo documentados en security/politica-de-bloqueo.md
+name: devsecops
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Mínimo privilegio por defecto; cada job pide solo lo que necesita.
+permissions:
+  contents: read
+
+concurrency:
+  group: devsecops-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SEMGREP_VERSION: "1.182.1"
+  GITLEAKS_VERSION: "8.30.1"
+  GITLEAKS_SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+
+jobs:
+  # ------------------------------------------------------------------
+  # 0. SECRETOS - gitleaks sobre los commits nuevos (PR o push)
+  #    BLOQUEA: cualquier secreto nuevo.
+  # ------------------------------------------------------------------
+  secretos:
+    name: secretos (gitleaks)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Instalar gitleaks (versión fija + checksum)
+        run: |
+          curl --fail --silent --show-error --location -o gitleaks.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tgz" | sha256sum -c -
+          tar xzf gitleaks.tgz gitleaks && sudo mv gitleaks /usr/local/bin/ && rm gitleaks.tgz
+
+      - name: Determinar rango de commits
+        id: rango
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT" = "pull_request" ]; then
+            echo "opts=${PR_BASE}..${PR_HEAD}" >> "$GITHUB_OUTPUT"
+          elif [ -n "$PUSH_BEFORE" ] && [ "$PUSH_BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            echo "opts=${PUSH_BEFORE}..${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          else
+            echo "opts=-1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Gate de secretos
+        env:
+          LOG_OPTS: ${{ steps.rango.outputs.opts }}
+        run: |
+          gitleaks git --log-opts="$LOG_OPTS" --redact \
+            --report-format sarif --report-path gitleaks.sarif --exit-code 1
+
+      - name: Subir SARIF a Code Scanning
+        if: always() && hashFiles('gitleaks.sarif') != ''
+        uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          sarif_file: gitleaks.sarif
+          category: gitleaks
+
+      - name: Guardar reporte
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: reporte-gitleaks
+          path: gitleaks.sarif
+          if-no-files-found: ignore
+
+  # ------------------------------------------------------------------
+  # 1. SAST - Semgrep (reglas OWASP + reglas propias en .semgrep/)
+  #    BLOQUEA: hallazgos NUEVOS de severidad ERROR en el PR.
+  #    AVISA:   WARNING / INFO y la deuda existente (va a Code Scanning).
+  # ------------------------------------------------------------------
+  sast:
+    name: sast (semgrep)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Instalar Semgrep
+        run: python3 -m pip install --quiet "semgrep==${SEMGREP_VERSION}"
+
+      - name: Escaneo completo (reporte SARIF)
+        run: |
+          semgrep scan --metrics=off \
+            --config p/owasp-top-ten --config p/javascript --config p/typescript \
+            --config .semgrep/ \
+            --sarif-output=semgrep.sarif --json-output=semgrep.json
+
+      - name: Gate - solo hallazgos nuevos de severidad ERROR
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          semgrep scan --metrics=off \
+            --config p/owasp-top-ten --config p/javascript --config p/typescript \
+            --config .semgrep/ \
+            --baseline-commit "$BASE_SHA" --severity ERROR --error
+
+      - name: Subir SARIF a Code Scanning
+        if: always() && hashFiles('semgrep.sarif') != ''
+        uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          sarif_file: semgrep.sarif
+          category: semgrep
+
+      - name: Guardar reportes
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: reporte-semgrep
+          path: |
+            semgrep.sarif
+            semgrep.json
+          if-no-files-found: ignore
+
+  # ------------------------------------------------------------------
+  # 2. SCA - SBOM CycloneDX (Syft) + vulnerabilidades (Grype) + licencias
+  #    BLOQUEA: CVE CRITICAL con corrección disponible no exceptuada
+  #             en .grype.yaml; licencias GPL/AGPL/SSPL.
+  #    AVISA:   HIGH o menor; componentes sin licencia.
+  # ------------------------------------------------------------------
+  sca:
+    name: sca (syft + grype)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Node.js 24
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      # Juice Shop no versiona package-lock.json (.npmrc: package-lock=false).
+      # Sin lockfile el SBOM solo vería rangos de versión; se genera sin
+      # instalar ni ejecutar scripts para resolver versiones exactas.
+      - name: Resolver versiones exactas (lockfiles)
+        run: |
+          npm install --package-lock-only --package-lock=true --ignore-scripts --no-audit --no-fund
+          npm --prefix frontend install --package-lock-only --package-lock=true --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+          test -s package-lock.json
+          test -s frontend/package-lock.json
+
+      - name: Generar SBOM CycloneDX (Syft)
+        id: sbom
+        uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: sbom.cdx.json
+          artifact-name: sbom-cyclonedx.json
+          upload-release-assets: false
+
+      - name: Gate de vulnerabilidades (Grype)
+        id: grype
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
+        with:
+          sbom: sbom.cdx.json
+          config: .grype.yaml
+          fail-build: true
+          severity-cutoff: critical
+          only-fixed: true
+          output-format: sarif
+          output-file: grype.sarif
+
+      - name: Reporte de Grype (todas las severidades, solo informativo)
+        if: always() && steps.sbom.outcome == 'success'
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
+        with:
+          sbom: sbom.cdx.json
+          config: .grype.yaml
+          fail-build: false
+          output-format: json
+          output-file: grype.json
+
+      - name: Gate de licencias
+        if: always() && steps.sbom.outcome == 'success'
+        run: python3 .github/scripts/check-licenses.py < sbom.cdx.json
+
+      - name: Subir SARIF a Code Scanning
+        if: always() && hashFiles('grype.sarif') != ''
+        uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          sarif_file: grype.sarif
+          category: grype
+
+      - name: Guardar reportes
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: reporte-sca
+          path: |
+            sbom.cdx.json
+            grype.sarif
+            grype.json
+          if-no-files-found: ignore
+
+  # ------------------------------------------------------------------
+  # 3. BUILD - imagen de contenedor (solo si secretos, SAST y SCA pasan)
+  #    En la Fase 5 se cambia por el Dockerfile endurecido de infra/.
+  # ------------------------------------------------------------------
+  build:
+    name: build (docker)
+    runs-on: ubuntu-24.04
+    needs: [secretos, sast, sca]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Construir imagen
+        run: |
+          docker build \
+            --build-arg VCS_REF="${GITHUB_SHA}" \
+            --build-arg BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            -t juice-shop:${GITHUB_SHA} .
+          docker run --detach --name juice-shop-smoke --publish 127.0.0.1:3000:3000 juice-shop:${GITHUB_SHA}
+          trap 'docker logs juice-shop-smoke; docker rm -f juice-shop-smoke' EXIT
+          curl --fail --retry 30 --retry-delay 2 --retry-all-errors http://127.0.0.1:3000/ > /dev/null
+          docker save juice-shop:${GITHUB_SHA} | gzip > imagen.tar.gz
+
+      - name: Guardar imagen para los jobs iac y dast
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: imagen-juice-shop
+          path: imagen.tar.gz
+          retention-days: 7
+
+  # iac:   needs: build   -> Fase 5 (Checkov + Trivy image)
+  # dast:  needs: build   -> Fase 6 (ZAP baseline, escaneo autenticado)
+  # publicacion:          -> Dependency-Track + DefectDojo

@@ -1,0 +1,80 @@
+# Reglas Semgrep propias del equipo (punto extra de la rúbrica).
+# Cada regla se traza a un requisito ASVS 4.0.3 de security/diseño/requisitos-asvs.md
+rules:
+  - id: js-sequelize-raw-query-interpolation
+    message: >-
+      Consulta SQL cruda construida con interpolación de strings (${...}).
+      Usar replacements o bind parameters de Sequelize. (ASVS V5.3.4, REQ-07)
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      cwe: "CWE-89: SQL Injection"
+      asvs: "V5.3.4"
+      requisito: "REQ-07"
+      confidence: HIGH
+    pattern-either:
+      - pattern: $DB.query(`...${$X}...`)
+      - pattern: $DB.query(`...${$X}...`, ...)
+
+  - id: js-hardcoded-private-key
+    message: >-
+      Llave privada embebida en el código fuente. Debe obtenerse mediante un gestor de secretos. (ASVS V6.4.1, REQ-12)
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      cwe: "CWE-798: Use of Hard-coded Credentials"
+      asvs: "V6.4.1"
+      requisito: "REQ-12"
+      confidence: HIGH
+    pattern-regex: "-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----"
+
+  - id: js-weak-password-hash-md5
+    message: >-
+      MD5 no es apto para almacenar contraseñas. Usar bcrypt, scrypt o
+      Argon2id con salt. (ASVS V2.4.1, REQ-03)
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      cwe: "CWE-916: Use of Password Hash With Insufficient Computational Effort"
+      asvs: "V2.4.1"
+      requisito: "REQ-03"
+      confidence: MEDIUM
+    pattern-either:
+      - pattern: crypto.createHash('md5')
+      - pattern: crypto.createHash("md5")
+
+  - id: js-eval-with-dynamic-input
+    message: >-
+      eval() con un argumento no literal permite ejecución de código si el
+      valor proviene del usuario. (ASVS V5.2.4, REQ-08)
+    severity: ERROR
+    languages: [typescript, javascript]
+    metadata:
+      cwe: "CWE-95: Eval Injection"
+      asvs: "V5.2.4"
+      requisito: "REQ-08"
+      confidence: MEDIUM
+    patterns:
+      - pattern: eval($X)
+      - pattern-not: eval("...")
+
+  - id: js-ssrf-fetch-user-url
+    message: >-
+      fetch() hacia una URL controlada por el usuario sin lista de
+      permitidos (SSRF). (ASVS V5.2.6, REQ-11)
+    severity: WARNING
+    languages: [typescript, javascript]
+    metadata:
+      cwe: "CWE-918: Server-Side Request Forgery"
+      asvs: "V5.2.6"
+      requisito: "REQ-11"
+      confidence: MEDIUM
+    mode: taint
+    pattern-sources:
+      - pattern: $REQ.body
+      - pattern: $REQ.query
+      - pattern: $REQ.params
+    pattern-sinks:
+      - patterns:
+          - pattern-inside: fetch($URL, ...)
+          - focus-metavariable: $URL

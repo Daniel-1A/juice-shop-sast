@@ -1,0 +1,12 @@
+# Configuración de Grype.
+# Cada excepción DEBE tener justificación, responsable y fecha de revisión,
+# y quedar registrada en security/politica-de-bloqueo.md (sección Excepciones)
+# y, cuando aplique, en una declaración VEX en security/vex/.
+#
+# Formato:
+# ignore:
+#   - vulnerability: CVE-AAAA-NNNNN
+#     package:
+#       name: nombre-del-paquete
+#     reason: "Vulnerable a propósito (reto de Juice Shop X). VEX: security/vex/xxx.json. Revisar: 2026-12-02"
+ignore: []

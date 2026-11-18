@@ -1,0 +1,11 @@
+# Dependencias y artefactos generados
+node_modules/
+frontend/node_modules/
+frontend/dist/
+build/
+dist/
+# Pruebas y datos de semilla (no se despliegan)
+test/
+frontend/src/**/*.spec.ts
+cypress/
+data/static/codefixes/

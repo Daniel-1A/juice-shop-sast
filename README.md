@@ -1,5 +1,45 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) OWASP Juice Shop
 
+## Avance DevSecOps · 18 de noviembre de 2026
+
+Proyecto final de Diseño y Proceso de Seguridad en el Desarrollo de Software, Universidad Galileo.
+
+**Equipo:** Daniel Martinez, Douglas Perez e Isabel Paiz.
+
+**Repositorio del equipo:** [Daniel-1A/juice-shop-sast](https://github.com/Daniel-1A/juice-shop-sast).
+
+**Uso de IA:** se usaron Claude para los borradores del avance y Codex para revisar la consigna, ajustar documentación y configuración, y preparar la demostración.
+
+| Entregable | Evidencia |
+|---|---|
+| Madurez inicial | [Diagnóstico SAMM](security/madurez/samm-inicial.md) |
+| Diseño | [Arquitectura](security/dise%C3%B1o/arquitectura.md), [DFD](security/dise%C3%B1o/dfd.md), [clasificación de datos](security/dise%C3%B1o/clasificacion-datos.md), [requisitos ASVS](security/dise%C3%B1o/requisitos-asvs.md) |
+| Revisión SAST | [Análisis inicial de cinco alertas](security/sast/hallazgos-iniciales.md) |
+| Revisión SCA | [Primer SBOM y resultado de Grype](security/sca/resultado-inicial.md) |
+| Pipeline del avance | [Workflow](.github/workflows/devsecops.yml), [reglas de Semgrep](.semgrep/juice-shop-rules.yml), [política de bloqueo](security/politica-de-bloqueo.md) y [ejecuciones de Actions](https://github.com/Daniel-1A/juice-shop-sast/actions/workflows/devsecops.yml) |
+
+El workflow corre en PR hacia `main`. Los artefactos `reporte-semgrep` y `reporte-sca` contienen el SARIF, el SBOM CycloneDX y el reporte de Grype. Para SCA se resuelven dependencias npm de la raíz y de `frontend/` sin ejecutar scripts. El SBOM del avance describe esas dependencias resueltas en CI. El escaneo de la imagen Docker corresponde a la entrega final.
+
+### Iniciar la instancia de laboratorio
+
+```powershell
+docker build -t juice-shop:avance .
+docker run --rm --name juice-shop-avance -p 127.0.0.1:3000:3000 juice-shop:avance
+```
+
+Abrir `http://localhost:3000`. Las pruebas se realizan en esta instancia propia o en el runner del equipo.
+
+### Reproducir SAST
+
+```powershell
+python -m pip install semgrep==1.182.1
+semgrep scan --metrics=off --config .semgrep/ --sarif-output=semgrep.sarif --json-output=semgrep.json
+```
+
+El escaneo local usa las reglas del equipo. El workflow añade las reglas de registro de JavaScript, TypeScript y OWASP Top Ten. En VS Code se puede usar la extensión `semgrep.semgrep` con la configuración local.
+
+---
+
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://owasp.org/projects/#sec-flagships)
 [![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
 [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
