@@ -36,3 +36,5 @@ Configurar en *Settings → Rules → Rulesets* (o *Branches → Branch protecti
 EXC-02 cubre exclusivamente los cuatro fingerprints de tokens ficticios heredados en test/server/verify.unit.test.ts del commit 66a82fc. Son entradas negativas de pruebas de JWT. Responsable Daniel Martinez, revision 2026-12-02.
 
 EXC-03 identifica los dos fingerprints de contrasenas de cuentas de semilla heredadas en test/api/feedback.test.ts del commit 3dacd8a. Responsable Daniel Martinez, revision 2026-12-02.
+
+Las excepciones EXC-01 a EXC-03 incluyen tambien los fingerprints del commit f47c13d, que normaliza finales de linea sin cambiar los fixtures.
