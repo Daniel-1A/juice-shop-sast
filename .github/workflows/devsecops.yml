@@ -247,7 +247,7 @@ jobs:
             -t juice-shop:${GITHUB_SHA} .
           docker run --detach --name juice-shop-smoke --publish 127.0.0.1:3000:3000 juice-shop:${GITHUB_SHA}
           trap 'docker logs juice-shop-smoke; docker rm -f juice-shop-smoke' EXIT
-          curl --fail --retry 30 --retry-delay 2 --retry-connrefused http://127.0.0.1:3000/ > /dev/null
+          curl --fail --retry 30 --retry-delay 2 --retry-all-errors http://127.0.0.1:3000/ > /dev/null
           docker save juice-shop:${GITHUB_SHA} | gzip > imagen.tar.gz
 
       - name: Guardar imagen para los jobs iac y dast
