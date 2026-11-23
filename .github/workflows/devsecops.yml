@@ -1,6 +1,6 @@
 # Pipeline DevSecOps - OWASP Juice Shop (fork del equipo)
-# Avance (18-nov-2026): secretos + SAST + SCA + build.
-# Pendiente para la entrega final: iac, dast y publicación (Dependency-Track / DefectDojo).
+# Fase 5: secretos + SAST + SCA + build + IaC/contenedor.
+# Pendiente: DAST y publicación (Dependency-Track / DefectDojo).
 # Umbrales de bloqueo documentados en security/politica-de-bloqueo.md
 name: devsecops
 
@@ -22,6 +22,8 @@ concurrency:
 env:
   SEMGREP_VERSION: "1.182.1"
   GITLEAKS_VERSION: "8.30.1"
+  TRIVY_VERSION: "0.76.2"
+  TRIVY_SHA256: "bc0fc726e017b8927a62b2d3531d7a84ee01769daf5c99ed866dced54089fdbf"
   GITLEAKS_SHA256: "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
 
 jobs:
@@ -228,7 +230,7 @@ jobs:
 
   # ------------------------------------------------------------------
   # 3. BUILD - imagen de contenedor (solo si secretos, SAST y SCA pasan)
-  #    En la Fase 5 se cambia por el Dockerfile endurecido de infra/.
+  #    Usa infra/Dockerfile y las restricciones de infra/compose.yaml.
   # ------------------------------------------------------------------
   build:
     name: build (docker)
@@ -239,16 +241,44 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Construir imagen
+      - name: Validar política de despliegue
         run: |
-          docker build \
+          python3 -m unittest discover -s infra -p 'test_*.py'
+          docker compose -f infra/compose.yaml config --format json > compose.json
+          python3 infra/check-compose.py < compose.json > compose-policy.json
+
+      - name: Construir y comprobar imagen endurecida
+        env:
+          JUICE_SHOP_IMAGE: juice-shop:${{ github.sha }}
+        run: |
+          docker build -f infra/Dockerfile \
             --build-arg VCS_REF="${GITHUB_SHA}" \
             --build-arg BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-            -t juice-shop:${GITHUB_SHA} .
-          docker run --detach --name juice-shop-smoke --publish 127.0.0.1:3000:3000 juice-shop:${GITHUB_SHA}
-          trap 'docker logs juice-shop-smoke; docker rm -f juice-shop-smoke' EXIT
-          curl --fail --retry 30 --retry-delay 2 --retry-all-errors http://127.0.0.1:3000/ > /dev/null
-          docker save juice-shop:${GITHUB_SHA} | gzip > imagen.tar.gz
+            -t "$JUICE_SHOP_IMAGE" .
+          cleanup() {
+            status=$?
+            docker compose -p juice-shop-ci -f infra/compose.yaml logs
+            docker compose -p juice-shop-ci -f infra/compose.yaml down --remove-orphans
+            exit "$status"
+          }
+          trap cleanup EXIT
+          docker compose -p juice-shop-ci -f infra/compose.yaml up --no-build --wait --wait-timeout 240
+          docker compose -p juice-shop-ci -f infra/compose.yaml exec -T juice-shop \
+            /nodejs/bin/node -e 'process.exit(process.getuid() === 65532 ? 0 : 1)'
+          curl --fail http://127.0.0.1:3000/ > /dev/null
+          docker inspect "$(docker compose -p juice-shop-ci -f infra/compose.yaml ps -q juice-shop)" > contenedor-smoke.json
+          docker save "$JUICE_SHOP_IMAGE" | gzip > imagen.tar.gz
+
+      - name: Guardar validación del despliegue
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: reporte-despliegue
+          path: |
+            compose.json
+            compose-policy.json
+            contenedor-smoke.json
+          if-no-files-found: error
 
       - name: Guardar imagen para los jobs iac y dast
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -257,6 +287,72 @@ jobs:
           path: imagen.tar.gz
           retention-days: 7
 
-  # iac:   needs: build   -> Fase 5 (Checkov + Trivy image)
+  # 4. IaC y contenedor: escanear exactamente la imagen del build.
+  iac:
+    name: iac (checkov + trivy)
+    runs-on: ubuntu-24.04
+    needs: build
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Descargar imagen del build
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: imagen-juice-shop
+          path: imagen-build
+
+      - name: Cargar imagen e instalar Trivy verificado
+        id: preparar
+        run: |
+          mkdir -p reports
+          gzip -dc imagen-build/imagen.tar.gz | docker load
+          docker image inspect "juice-shop:${GITHUB_SHA}" > reports/imagen.json
+          curl --fail --silent --show-error --location \
+            -o trivy.tgz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+          echo "${TRIVY_SHA256}  trivy.tgz" | sha256sum -c -
+          tar xzf trivy.tgz trivy
+          ./trivy --version > reports/trivy-version.txt
+
+      - name: Gate Checkov (Dockerfile de infra)
+        id: checkov
+        run: |
+          mkdir -p reports
+          set +e
+          docker run --rm --volume "$PWD:/src:ro" \
+            bridgecrew/checkov:3.4.7@sha256:2df9b825a73bf4d09f0ab0d71b12844801454c3c35430162e7e2cf0e60e34e40 \
+            --file /src/infra/Dockerfile --framework dockerfile --skip-download \
+            --output json > reports/checkov.json
+          status=$?
+          set -e
+          python3 -c 'import json; s=json.load(open("reports/checkov.json"))["summary"]; assert s["resource_count"] > 0 and s["parsing_errors"] == 0, s'
+          exit "$status"
+
+      - name: Reporte completo Trivy (imagen)
+        if: always() && steps.preparar.outcome == 'success'
+        id: trivy
+        run: |
+          ./trivy image --scanners vuln --exit-code 0 --timeout 15m \
+            --format json --output reports/trivy-image.json "juice-shop:${GITHUB_SHA}"
+          test -s reports/trivy-image.json
+
+      - name: Gate Trivy (CRITICAL con corrección)
+        if: always() && steps.trivy.outcome == 'success'
+        run: |
+          ./trivy image --scanners vuln --severity CRITICAL --ignore-unfixed \
+            --exit-code 1 --timeout 15m --format json \
+            --output reports/trivy-gate.json "juice-shop:${GITHUB_SHA}"
+          test -s reports/trivy-gate.json
+
+      - name: Guardar reportes de IaC y contenedor
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: reporte-iac-contenedor
+          path: reports/
+          if-no-files-found: error
+          retention-days: 14
+
   # dast:  needs: build   -> Fase 6 (ZAP baseline, escaneo autenticado)
   # publicacion:          -> Dependency-Track + DefectDojo

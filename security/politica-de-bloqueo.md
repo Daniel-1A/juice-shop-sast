@@ -12,14 +12,16 @@ Ningún gate usa `continue-on-error` ni `|| true`. Los pasos de reporte usan `if
 | SAST | Semgrep 1.182.1 | Hallazgos **nuevos** (respecto a la rama base) de severidad `ERROR` | `WARNING` e `INFO`; hallazgos ya existentes en `main` | Severidad ERROR = inyección, ejecución de código, credenciales. Bloquear la deuda heredada haría fallar todos los PR |
 | SCA - vulnerabilidades | Grype (anchore/scan-action v7.4.2) | CVE `CRITICAL` **con corrección disponible** que no esté en `.grype.yaml` | `HIGH` o menor; CVE sin parche | Cubre también las dependencias heredadas con parche disponible |
 | SCA - licencias | `check-licenses.py` | SBOM vacío o con una licencia denegada por la política del curso (GPL, AGPL o SSPL, con soporte para alternativas SPDX simples) | Componentes sin licencia declarada | Un inventario vacío invalida el análisis y las licencias denegadas se revisan antes de integrar |
-| IaC y contenedor | Checkov / Trivy | *Fase 5* | *Fase 5* | — |
+| IaC - Dockerfile | Checkov 3.4.7 | Cualquier check fallido o error de parsing en `infra/Dockerfile`; reporte sin recursos también falla | Ninguno; sin checks omitidos | Se analiza el despliegue del equipo; los directorios de retos no forman parte del gate |
+| IaC - despliegue | `infra/check-compose.py` sobre Compose normalizado | Usuario distinto de 65532:65532, puertos fuera de localhost, privilegios/capabilities, namespaces del host, montajes/dispositivos, falta de límites o healthcheck; JSON inválido/vacío | Ninguno | Control explícito porque Checkov no tiene cobertura nativa de Compose |
+| Contenedor | Trivy 0.76.2 | CVE CRITICAL con corrección disponible en la imagen del build; errores de escaneo también fallan | HIGH o menor; CVE sin corrección, conservadas en reporte completo | Misma imagen que supera el smoke test; sin excepciones de Trivy |
 | DAST | ZAP baseline | *Fase 6* (reglas en `.zap/rules.tsv`) | *Fase 6* | — |
 
 ## Checks obligatorios en `main`
 Configurar en *Settings → Rules → Rulesets* (o *Branches → Branch protection*) cuando el equipo haya comprobado la primera ejecución:
 
 - Requerir pull request con **1 aprobación** de otro integrante.
-- Requerir que pasen: `secretos (gitleaks)`, `sast (semgrep)`, `sca (syft + grype)`, `build (docker)`.
+- Requerir que pasen: `secretos (gitleaks)`, `sast (semgrep)`, `sca (syft + grype)`, `build (docker)` e `iac (checkov + trivy)` (añadir este último después de verificar su primera ejecución).
 - Requerir rama actualizada antes de fusionar.
 - Bloquear force-push y borrado de `main`.
 
@@ -40,3 +42,9 @@ EXC-03 identifica los dos fingerprints de contrasenas de cuentas de semilla here
 Las excepciones EXC-01 a EXC-03 incluyen tambien los fingerprints del commit f47c13d, que normaliza finales de linea sin cambiar los fixtures.
 
 EXC-04 cubre exclusivamente la contrasena ficticia de test/api/basket.test.ts:66 en el commit d01ec61. La prueba actual genera una contrasena aleatoria. Responsable Daniel Martinez, revision 2026-12-02.
+
+## Alcance de infraestructura y evidencia
+
+`infra/` contiene el despliegue del equipo. Los directorios heredados `infrastructure/` y `terraform/` contienen vulnerabilidades intencionales de retos y no se usan para desplegar ni forman parte del gate de fase 5. Checkov cubre el Dockerfile; Compose se valida con su CLI y la política local probada.
+
+Los reportes completos de Checkov y Trivy se guardan en `reporte-iac-contenedor`, incluso si fallan los gates. La evidencia local, los resultados antes/después y la limitación del almacén Docker dañado están en `security/iac/resultado-fase-5.md`. Configurar un gate no demuestra una ejecución aprobada en CI.
