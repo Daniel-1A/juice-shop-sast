@@ -1,0 +1,19 @@
+# Runtime fills requests with ephemeral headers; the generated plan is private.
+env:
+  contexts:
+    - name: juice-shop-owned
+      urls: ["http://juice-shop:3000"]
+      includePaths: ["http://juice-shop:3000/.*"]
+  parameters:
+    failOnError: true
+    failOnWarning: true
+    continueOnFailure: false
+    progressToStdout: false
+    maxDuration: 120
+jobs:
+  - type: requestor
+    name: authenticated-traversal
+    requests: []
+  - type: passiveScan-wait
+    parameters:
+      maxDuration: 2

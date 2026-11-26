@@ -31,3 +31,7 @@ scripts/
 terraform/
 test/
 vagrant/
+
+# DAST tooling is mounted in the scanner, not packaged in the application.
+.zap/
+infra/__pycache__/
