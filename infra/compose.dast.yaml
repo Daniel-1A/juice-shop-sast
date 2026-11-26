@@ -1,0 +1,4 @@
+# No route from the application/scanner network to external services.
+networks:
+  default:
+    internal: true

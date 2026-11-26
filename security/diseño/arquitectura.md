@@ -63,11 +63,11 @@ flowchart LR
     DEV[Integrante<br/>VS Code + Semgrep] -- git push / PR --> GH[GitHub<br/>fork público]
     GH --> GA[GitHub Actions<br/>runner ubuntu-latest efímero]
     GA -- docker build -f infra/Dockerfile --> IMG[Imagen juice-shop:SHA<br/>distroless nodejs24, USER 65532]
-    GA -. Fase 6 .-> APP[Instancia efímera<br/>para ZAP baseline]
+    GA -- job dast --> APP[Instancia efímera propia<br/>red interna para ZAP]
     DEV -- docker run --> LOCAL[Instancia local<br/>localhost:3000]
 ```
 
-- La instancia del runner para ZAP y los servicios locales Dependency-Track y DefectDojo se incorporarán en la entrega final.
+- El job DAST descarga la imagen del build después de IaC, usa una red interna y recrea la instancia por modo. Baseline y autenticado van en cada PR; full/API se habilitan manualmente. La primera ejecución CI de fase 6 sigue pendiente hasta observar el PR. Dependency-Track y DefectDojo se incorporarán en la siguiente fase.
 - **Entorno de pruebas:** solo contenedores propios, en la laptop de cada integrante o en el runner de GitHub Actions, que se destruye al terminar cada job. No hay despliegue en nube.
 - **Imagen del equipo:** `infra/Dockerfile`, construcción multi-etapa Node.js 24 → distroless nodejs24-debian13:nonroot, ambas bases fijadas por digest, UID/GID 65532 y healthcheck sin shell. El Dockerfile original se conserva como referencia. El estado de validación real está en `security/iac/resultado-fase-5.md`.
 - **Despliegue:** `infra/compose.yaml`, puerto en localhost, capabilities eliminadas, no-new-privileges y límites de CPU, memoria y procesos. La capa escribible se conserva para los archivos que genera la aplicación. No hay montajes del host ni persistencia.

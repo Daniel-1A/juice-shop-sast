@@ -1,6 +1,6 @@
 # Pipeline DevSecOps - OWASP Juice Shop (fork del equipo)
-# Fase 5: secretos + SAST + SCA + build + IaC/contenedor.
-# Pendiente: DAST y publicación (Dependency-Track / DefectDojo).
+# Fase 6: secretos + SAST + SCA + build + IaC/contenedor + DAST.
+# Pendiente: publicación (Dependency-Track / DefectDojo).
 # Umbrales de bloqueo documentados en security/politica-de-bloqueo.md
 name: devsecops
 
@@ -10,6 +10,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      extended_scans:
+        description: Ejecutar además ZAP full scan y API scan activos (instancia propia)
+        type: boolean
+        required: false
+        default: false
 
 # Mínimo privilegio por defecto; cada job pide solo lo que necesita.
 permissions:
@@ -354,5 +360,43 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-  # dast:  needs: build   -> Fase 6 (ZAP baseline, escaneo autenticado)
+  # 5. DAST: la imagen aprobada por IaC, en red interna, sin servicios externos.
+  dast:
+    name: dast (zap)
+    runs-on: ubuntu-24.04
+    needs: [build, iac]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Descargar imagen del build
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: imagen-juice-shop
+          path: imagen-build
+
+      - name: Cargar imagen y probar validadores
+        run: |
+          gzip -dc imagen-build/imagen.tar.gz | docker load
+          python3 -m unittest discover -s .zap -p 'test_*.py'
+          docker compose -f infra/compose.yaml -f infra/compose.dast.yaml config --format json > compose-dast.json
+          python3 infra/check-compose.py < compose-dast.json
+
+      - name: Ejecutar ZAP y verificar cobertura y autenticación
+        id: zap
+        env:
+          EXTENDED_SCANS: ${{ github.event_name == 'workflow_dispatch' && inputs.extended_scans || false }}
+        run: bash .zap/scan.sh "juice-shop:${GITHUB_SHA}" "$EXTENDED_SCANS"
+
+      - name: Conservar solo reportes saneados
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: reporte-dast
+          path: ${{ steps.zap.outputs.report_dir || 'reports/dast-not-created' }}
+          if-no-files-found: error
+          retention-days: 14
+
   # publicacion:          -> Dependency-Track + DefectDojo

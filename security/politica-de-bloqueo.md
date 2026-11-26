@@ -15,13 +15,14 @@ Ningún gate usa `continue-on-error` ni `|| true`. Los pasos de reporte usan `if
 | IaC - Dockerfile | Checkov 3.4.7 | Cualquier check fallido o error de parsing en `infra/Dockerfile`; reporte sin recursos también falla | Ninguno; sin checks omitidos | Se analiza el despliegue del equipo; los directorios de retos no forman parte del gate |
 | IaC - despliegue | `infra/check-compose.py` sobre Compose normalizado | Usuario distinto de 65532:65532, puertos fuera de localhost, privilegios/capabilities, namespaces del host, montajes/dispositivos, falta de límites o healthcheck; JSON inválido/vacío | Ninguno | Control explícito porque Checkov no tiene cobertura nativa de Compose |
 | Contenedor | Trivy 0.76.2 | CVE CRITICAL con corrección disponible en la imagen del build; errores de escaneo también fallan | HIGH o menor; CVE sin corrección, conservadas en reporte completo | Misma imagen que supera el smoke test; sin excepciones de Trivy |
-| DAST | ZAP baseline | *Fase 6* (reglas en `.zap/rules.tsv`) | *Fase 6* | — |
+| DAST pasivo | ZAP 2.17.0 baseline y recorrido autenticado | Reglas 10020/10021 de `.zap/rules.tsv`; errores operativos, ausencia de respuestas reales, reporte inválido o autenticación no demostrada | Resto de alertas pasivas | Protege los dos encabezados ya configurados. No es un gate diferencial; evalúa el alcance completo examinado |
+| DAST activo manual | ZAP full y API | Errores operativos, timeout del runner, alcance/cobertura inválidos y autenticación fallida | Hallazgos activos para priorización del laboratorio; se conservan todos | Escaneos acotados de instancias propias. No se convierten errores de herramienta en éxito |
 
 ## Checks obligatorios en `main`
 Configurar en *Settings → Rules → Rulesets* (o *Branches → Branch protection*) cuando el equipo haya comprobado la primera ejecución:
 
 - Requerir pull request con **1 aprobación** de otro integrante.
-- Requerir que pasen: `secretos (gitleaks)`, `sast (semgrep)`, `sca (syft + grype)`, `build (docker)` e `iac (checkov + trivy)` (añadir este último después de verificar su primera ejecución).
+- Requerir que pasen: `secretos (gitleaks)`, `sast (semgrep)`, `sca (syft + grype)`, `build (docker)` e `iac (checkov + trivy)` (añadir este último después de verificar su primera ejecución), y `dast (zap)` después de comprobar el primer PR de fase 6.
 - Requerir rama actualizada antes de fusionar.
 - Bloquear force-push y borrado de `main`.
 
@@ -48,3 +49,15 @@ EXC-04 cubre exclusivamente la contrasena ficticia de test/api/basket.test.ts:66
 `infra/` contiene el despliegue del equipo. Los directorios heredados `infrastructure/` y `terraform/` contienen vulnerabilidades intencionales de retos y no se usan para desplegar ni forman parte del gate de fase 5. Checkov cubre el Dockerfile; Compose se valida con su CLI y la política local probada.
 
 Los reportes completos de Checkov y Trivy se guardan en `reporte-iac-contenedor`, incluso si fallan los gates. La evidencia local, los resultados antes/después y la limitación del almacén Docker dañado están en `security/iac/resultado-fase-5.md`. Configurar un gate no demuestra una ejecución aprobada en CI.
+
+## DAST: aplicación de la política
+
+Baseline y modo autenticado comparten rules.tsv y el mismo validador. La opción -I permite WARN sin bloquear, pero FAIL y errores continúan fallando. Las dos reglas FAIL protegen X-Frame-Options y X-Content-Type-Options ya presentes; su severidad baja no impide que una regresión bloquee. Las brechas heredadas restantes se conservan como alertas, sin IGNORE global ni nuevas excepciones.
+
+ZAP se une a una red interna y no publica su API. Cada modo usa una instancia nueva. El modo autenticado exige identidad y carrito correctos observados en el historial de ZAP y rechazo de token inválido, no solo HTTP 200. Los reportes se sanean y se publican por ejecución única, sin tokens, contraseñas o sesiones privadas.
+
+Full/API se habilitan explícitamente con extended_scans en workflow_dispatch. Tienen un presupuesto activo de cinco minutos comprobado mediante la API; terminar dentro de ese presupuesto no significa examen exhaustivo. El contrato OpenAPI solo cubre B2B y se complementa con las rutas de la prueba de sesión. El plan formal de pentest sigue siendo un entregable separado que no se ejecuta como parte de este trabajo.
+
+EXC-05 cubre exclusivamente el JWT sintetico no firmado de la prueba de saneamiento en .zap/test_run.py:54 del commit f2c72c4. No era una credencial real ni autorizaba acceso a un servicio. La prueba actual genera sus datos en runtime. Fingerprint limitado a ese commit/archivo/regla/linea; responsable Daniel Martinez; revisar 2026-12-02 y aprobar por el otro integrante en el PR. No se ignoran nuevos JWT ni el archivo completo.
+
+EXC-06 cubre solo la llamada subprocess.run de .zap/run.py para la regla dangerous-subprocess-use-tainted-env-args. Revision estatica: el ejecutable es /usr/bin/python3 fijado en la imagen; el script se selecciona de tres scripts oficiales mediante modos argparse limitados; el objetivo y las opciones son controlados; las rutas privadas se generan con tempfile y la salida CLI no se usa como ejecutable. Se usa argv y shell=False; no hay comandos -c ni concatenacion de shell. Es un falso positivo de propagacion a traves de argparse, no una aceptacion de inyeccion. Responsable Daniel Martinez; revisar 2026-12-02 y aprobar por el otro integrante en el PR. La supresion identifica solo esta regla y esta llamada, no el archivo ni otros hallazgos.

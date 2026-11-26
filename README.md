@@ -1,3 +1,5 @@
+> **Fase 6 - ZAP/DAST:** modos de CI, ejecución manual ampliada, reglas y reportes en [.zap/README.md](.zap/README.md).
+
 > **Laboratorio SSDLC del equipo:** despliegue local y validación de infraestructura en [infra/README.md](infra/README.md). Estado y evidencia de fase 5 en [security/iac/resultado-fase-5.md](security/iac/resultado-fase-5.md).
 
 # ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) OWASP Juice Shop

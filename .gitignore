@@ -76,3 +76,7 @@ cypress/screenshots/
 *.sarif
 reports/
 .bearer/
+
+# Python caches from DAST and infrastructure validation
+/.zap/__pycache__/
+/infra/__pycache__/
