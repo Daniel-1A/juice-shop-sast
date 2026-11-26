@@ -1,6 +1,5 @@
 # Pipeline DevSecOps - OWASP Juice Shop (fork del equipo)
-# Fase 6: secretos + SAST + SCA + build + IaC/contenedor + DAST.
-# Pendiente: publicación (Dependency-Track / DefectDojo).
+# Fase 7: publicación de los reportes ya generados en el flujo de confianza.
 # Umbrales de bloqueo documentados en security/politica-de-bloqueo.md
 name: devsecops
 
@@ -399,4 +398,31 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-  # publicacion:          -> Dependency-Track + DefectDojo
+  publicacion:
+    name: publicacion (inventarios)
+    if: >-
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      github.repository == 'Daniel-1A/juice-shop-sast' &&
+      vars.PUBLISH_SECURITY_REPORTS == 'true'
+    needs: [sast, sca, iac, dast]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: seguridad-publicacion
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          pattern: reporte-*
+          path: artefactos-seguridad
+      - name: Publicar hallazgos y SBOM
+        env:
+          DOJO_URL: ${{ vars.DOJO_URL }}
+          DOJO_PRODUCT_NAME: ${{ vars.DOJO_PRODUCT_NAME }}
+          DOJO_ENGAGEMENT_NAME: ${{ vars.DOJO_ENGAGEMENT_NAME }}
+          DOJO_API_TOKEN: ${{ secrets.DOJO_API_TOKEN }}
+          DTRACK_URL: ${{ vars.DTRACK_URL }}
+          DTRACK_PROJECT_ID: ${{ vars.DTRACK_PROJECT_ID }}
+          DTRACK_API_KEY: ${{ secrets.DTRACK_API_KEY }}
+        run: python3 .github/scripts/publish-reports.py artefactos-seguridad --commit "$GITHUB_SHA" --run "$GITHUB_RUN_ID"

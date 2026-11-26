@@ -1,0 +1,50 @@
+[
+  {
+    "id": 2,
+    "title": "Semgrep",
+    "engagement": 2,
+    "commit_hash": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+    "build_id": "45846349943",
+    "findings": 37
+  },
+  {
+    "id": 3,
+    "title": "Grype",
+    "engagement": 2,
+    "commit_hash": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+    "build_id": "45846349943",
+    "findings": 41
+  },
+  {
+    "id": 4,
+    "title": "Checkov",
+    "engagement": 2,
+    "commit_hash": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+    "build_id": "45846349943",
+    "findings": 0
+  },
+  {
+    "id": 5,
+    "title": "Trivy",
+    "engagement": 2,
+    "commit_hash": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+    "build_id": "45846349943",
+    "findings": 96
+  },
+  {
+    "id": 6,
+    "title": "ZAP Baseline",
+    "engagement": 2,
+    "commit_hash": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+    "build_id": "45846349943",
+    "findings": 3
+  },
+  {
+    "id": 7,
+    "title": "ZAP Autenticado",
+    "engagement": 2,
+    "commit_hash": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+    "build_id": "45846349943",
+    "findings": 4
+  }
+]

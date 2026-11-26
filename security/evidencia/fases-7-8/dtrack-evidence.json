@@ -1,0 +1,16 @@
+{
+  "name": "OWASP Juice Shop SSDLC",
+  "violationState": "WARN",
+  "conditions": [
+    {
+      "subject": "SEVERITY",
+      "operator": "IS",
+      "value": "CRITICAL"
+    }
+  ],
+  "policy": "Juice Shop - vulnerabilidad critica",
+  "components": "1167",
+  "lastBomImport": 1795714587009,
+  "version": "20.3.0",
+  "attached": true
+}

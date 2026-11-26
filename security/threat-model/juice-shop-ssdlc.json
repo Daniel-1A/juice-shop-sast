@@ -1,0 +1,1212 @@
+{
+  "summary": {
+    "title": "OWASP Juice Shop - laboratorio SSDLC",
+    "owner": "Björn Kimminich",
+    "description": "Diagrama original de OWASP Juice Shop ampliado con las amenazas del laboratorio SSDLC de Universidad Galileo. Los identificadores Txx se trazan a la matriz del equipo y al DFD detallado."
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Daniel Martinez"
+      },
+      {
+        "name": "Douglas Perez"
+      },
+      {
+        "name": "Isabel Paiz"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Flujo de datos y amenazas STRIDE",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "$$hashKey": "object:59",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 64,
+                "y": 173
+              },
+              "angle": 0,
+              "id": "5c682ec9-c352-442e-b61c-2de8ed53ea22",
+              "z": 1,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "B2C Customer (Browser)"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 68,
+                "y": 52
+              },
+              "angle": 0,
+              "id": "d02fa030-ca19-47ad-8920-0980cd87a351",
+              "z": 2,
+              "hasOpenThreats": false,
+              "outOfScope": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isOutOfScope"
+                },
+                "text": {
+                  "text": "Google"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 455,
+                "y": 1
+              },
+              "angle": 0,
+              "id": "064304c2-9672-44f2-9e08-982d58145bc0",
+              "z": 3,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Angular\nFrontend"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "616cb69c-2e15-5c9b-aff8-c7341e5e2e6b",
+                  "title": "T13 - El navegador interpreta contenido de usuario como código",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "DFD P2 · F8. Impacto medio. Probabilidad media.",
+                  "mitigation": "Codificación contextual y CSP. REQ-09/14 · SAST y DAST pasivo, PT-08."
+                }
+              ]
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 468,
+                "y": 228
+              },
+              "angle": 0,
+              "id": "edced7d1-6206-43bc-94ab-aa515977042a",
+              "z": 4,
+              "hasOpenThreats": true,
+              "description": "Node.js / Express",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Application\nServer"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "f9d69c7d-45b2-528f-8f73-d47827f28947",
+                  "title": "T02 - Acceso con credenciales adivinadas o reutilizadas",
+                  "type": "Spoofing",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P1 · F1. Impacto alto. Probabilidad media.",
+                  "mitigation": "Limitación por cuenta y origen. REQ-02 · revisión manual, PT-04."
+                },
+                {
+                  "threatId": "d28fa6df-c95b-50b3-9643-6ceb1a237b4a",
+                  "title": "T09 - Datos de perfil alcanzan evaluación dinámica",
+                  "type": "Elevation of privilege",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P4 · F12. Impacto alto. Probabilidad media.",
+                  "mitigation": "Renderizar contenido como datos. REQ-08 · Semgrep, PT-05."
+                },
+                {
+                  "threatId": "14a93a0b-3709-5711-a6f2-f7d2e909a855",
+                  "title": "T10 - La obtención de recursos remotos agota capacidad",
+                  "type": "Denial of service",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P4 · F13. Impacto alto. Probabilidad media.",
+                  "mitigation": "Destinos permitidos, límites de tiempo y tamaño. REQ-11 · Semgrep y revisión manual, PT-05."
+                }
+              ]
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 830,
+                "y": 393
+              },
+              "angle": 0,
+              "id": "673196a0-0797-4c56-974b-b169ec27accb",
+              "z": 5,
+              "hasOpenThreats": true,
+              "description": "",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "SQLite Database"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "f3e53d87-f103-5425-9a2f-d61690ddfb76",
+                  "title": "T11 - Un almacén expone hashes débiles de contraseñas",
+                  "type": "Information disclosure",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P1 · D1. Impacto alto. Probabilidad media.",
+                  "mitigation": "Hash adaptativo con salt independiente. REQ-03 · Semgrep, PT-04."
+                }
+              ]
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 568,
+                "y": 396
+              },
+              "angle": 0,
+              "id": "38c5137f-1570-446a-9978-a98f84fe1c59",
+              "z": 6,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "MarsDB NoSQL DB"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 828,
+                "y": 255
+              },
+              "angle": 0,
+              "id": "00ae7380-5510-4772-8f98-d83df41035b6",
+              "z": 7,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Local File System"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "eac92a7f-2eef-58b5-9e05-7a68adc07212",
+                  "title": "T03 - Identidad derivada de claves fuera de custodia",
+                  "type": "Spoofing",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P1 · D3. Impacto alto. Probabilidad media.",
+                  "mitigation": "Custodia y rotación de llaves. REQ-04/12 · Gitleaks y SAST, PT-01."
+                },
+                {
+                  "threatId": "be412ede-e46b-5a1a-a898-ab7697b45641",
+                  "title": "T07 - Una ruta pública expone archivos internos",
+                  "type": "Information disclosure",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P6 · F17/F18. Impacto alto. Probabilidad alta.",
+                  "mitigation": "Deshabilitar listados y exigir ACL. REQ-10 · DAST pasivo, PT-06."
+                }
+              ]
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5c682ec9-c352-442e-b61c-2de8ed53ea22"
+              },
+              "target": {
+                "id": "064304c2-9672-44f2-9e08-982d58145bc0"
+              },
+              "vertices": [
+                {
+                  "x": 355,
+                  "y": 146
+                }
+              ],
+              "id": "cb17d350-86bc-4f06-8858-668093987b57",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 8,
+              "hasOpenThreats": false,
+              "isPublicNetwork": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "064304c2-9672-44f2-9e08-982d58145bc0"
+              },
+              "target": {
+                "id": "d02fa030-ca19-47ad-8920-0980cd87a351"
+              },
+              "vertices": [
+                {
+                  "x": 337,
+                  "y": 35
+                }
+              ],
+              "id": "2d66f056-75e8-4436-bc99-a0817b3f1c19",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "OAuth2",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 9,
+              "hasOpenThreats": false,
+              "isPublicNetwork": true,
+              "isEncrypted": true,
+              "protocol": "",
+              "outOfScope": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isOutOfScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "064304c2-9672-44f2-9e08-982d58145bc0"
+              },
+              "target": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "vertices": [
+                {
+                  "x": 419,
+                  "y": 204
+                }
+              ],
+              "id": "46d76eab-2862-414b-bce6-c0d8fe79cf79",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "API Requests",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 10,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "26b756a5-5997-5974-80a3-838ac1d1f415",
+                  "title": "T05 - Usuario cambia un recurso de otra cuenta",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P3 · F9. Impacto alto. Probabilidad media.",
+                  "mitigation": "Verificar propiedad en servidor. REQ-05/06 · pruebas de acceso, PT-02."
+                }
+              ]
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "064304c2-9672-44f2-9e08-982d58145bc0"
+              },
+              "vertices": [
+                {
+                  "x": 514,
+                  "y": 150
+                }
+              ],
+              "id": "dc9ff0b8-2bae-4839-97f1-181f47282846",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "API Responses",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 11,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "c9ce14ca-1dd3-5277-9490-5a9520622692",
+                  "title": "T01 - Identidad asumida por una sesión no válida",
+                  "type": "Spoofing",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P1 · F2. Impacto alto. Probabilidad alta.",
+                  "mitigation": "Verificar firma, algoritmo y vigencia. REQ-04 · regresión de sesión, PT-01."
+                },
+                {
+                  "threatId": "2c6ec3f0-fcfe-5b82-8aee-63708a27fdff",
+                  "title": "T12 - Un error interno expone detalles de implementación",
+                  "type": "Information disclosure",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P2 · F6/F7. Impacto medio. Probabilidad alta.",
+                  "mitigation": "Respuestas genéricas y logs restringidos. REQ-13 · revisión manual, PT-06."
+                }
+              ]
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "00ae7380-5510-4772-8f98-d83df41035b6"
+              },
+              "vertices": [
+                {
+                  "x": 683,
+                  "y": 236
+                }
+              ],
+              "id": "028ce073-348f-498d-ab6e-7d98e4d7ae77",
+              "labels": [
+                {
+                  "position": 0.4545744602063211,
+                  "attrs": {
+                    "text": {
+                      "text": "Invoices",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 12,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 66,
+                "y": 296
+              },
+              "angle": 0,
+              "id": "82095edc-bdca-448b-8c28-ed1aaba2e9e9",
+              "z": 13,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "B2B Customer (Browser)"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 307,
+                "y": 338
+              },
+              "angle": 0,
+              "id": "2f427832-3419-4b43-ae77-338f8636ca2b",
+              "z": 14,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "B2B API"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "82095edc-bdca-448b-8c28-ed1aaba2e9e9"
+              },
+              "target": {
+                "id": "2f427832-3419-4b43-ae77-338f8636ca2b"
+              },
+              "vertices": [],
+              "id": "f9d73d1a-e79a-4a57-bba8-c7cbc02fa348",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 15,
+              "hasOpenThreats": false,
+              "isPublicNetwork": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2f427832-3419-4b43-ae77-338f8636ca2b"
+              },
+              "target": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "vertices": [],
+              "id": "1515ba33-e41b-4940-b92c-139179c14709",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Orders",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 16,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 844,
+                "y": 1
+              },
+              "angle": 0,
+              "id": "0191343a-8439-45d7-b9e4-6b052f91415d",
+              "z": 17,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Admin (Browser)"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 847,
+                "y": 107
+              },
+              "angle": 0,
+              "id": "12bf3793-217c-4863-b430-718182257f1a",
+              "z": 18,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Accounting (Browser)"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "12bf3793-217c-4863-b430-718182257f1a"
+              },
+              "target": {
+                "id": "064304c2-9672-44f2-9e08-982d58145bc0"
+              },
+              "vertices": [],
+              "id": "16ed975a-3375-47b2-ab23-dac55835961c",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Product Inventory",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 19,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "0191343a-8439-45d7-b9e4-6b052f91415d"
+              },
+              "target": {
+                "id": "064304c2-9672-44f2-9e08-982d58145bc0"
+              },
+              "vertices": [
+                {
+                  "x": 679,
+                  "y": 18
+                }
+              ],
+              "id": "8a3a017a-76c0-45fa-9d39-c31311f8b76f",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "User Management",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 20,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "56dd82fc-0c49-5c93-85d8-49a028eec076",
+                  "title": "T06 - Cliente alcanza una operación administrativa",
+                  "type": "Elevation of privilege",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P5 · F15. Impacto alto. Probabilidad media.",
+                  "mitigation": "Autorizar el rol en todas las operaciones. REQ-05 · revisión manual, PT-02."
+                }
+              ]
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "673196a0-0797-4c56-974b-b169ec27accb"
+              },
+              "vertices": [],
+              "id": "063a0a1a-352e-45bb-bce9-abee2be89a0d",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "all other data",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 21,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "dfc4072f-5bbc-5818-821d-803f5293c8ca",
+                  "title": "T04 - Entradas cambian el significado de una consulta",
+                  "type": "Tampering",
+                  "status": "Open",
+                  "severity": "High",
+                  "description": "DFD P1/P2 · F3/F7. Impacto alto. Probabilidad alta.",
+                  "mitigation": "Vincular parámetros y manejar errores. REQ-07 · Semgrep, PT-03."
+                }
+              ]
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "38c5137f-1570-446a-9978-a98f84fe1c59"
+              },
+              "vertices": [
+                {
+                  "x": 509,
+                  "y": 385
+                }
+              ],
+              "id": "96dee941-1600-445f-b12f-88fbb0776c16",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Orders",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 22,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "38c5137f-1570-446a-9978-a98f84fe1c59"
+              },
+              "vertices": [
+                {
+                  "x": 565,
+                  "y": 378
+                }
+              ],
+              "id": "5581ae64-5e43-4525-94e0-e020793e4136",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Reviews",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 23,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "5c682ec9-c352-442e-b61c-2de8ed53ea22"
+              },
+              "vertices": [],
+              "id": "e9a8981a-2243-4e43-a68b-0bdfd81f1a45",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Invoices",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 24,
+              "hasOpenThreats": false,
+              "isPublicNetwork": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 93,
+                "y": 19
+              },
+              "target": {
+                "x": 65,
+                "y": 146
+              },
+              "vertices": [
+                {
+                  "x": 252,
+                  "y": 54
+                },
+                {
+                  "x": 246,
+                  "y": 143
+                }
+              ],
+              "id": "e4006eb6-c6da-4056-8cad-6111ffed690a",
+              "z": 25,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 183,
+                "y": 441
+              },
+              "target": {
+                "x": 286,
+                "y": 124
+              },
+              "vertices": [
+                {
+                  "x": 310,
+                  "y": 320
+                }
+              ],
+              "id": "a0bc0999-c102-4390-9c74-355bfea405be",
+              "z": 26,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 772,
+                "y": 161
+              },
+              "target": {
+                "x": 784,
+                "y": 1
+              },
+              "vertices": [
+                {
+                  "x": 787,
+                  "y": 90
+                }
+              ],
+              "id": "b66d28e9-c542-452b-944c-6ea0b95d7421",
+              "z": 27,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 417,
+                "y": 128
+              },
+              "target": {
+                "x": 616,
+                "y": 156
+              },
+              "vertices": [],
+              "id": "140276bc-f5b6-4199-ac4d-ea1f473c132a",
+              "z": 28,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 749,
+                "y": 492
+              },
+              "target": {
+                "x": 753,
+                "y": 198
+              },
+              "vertices": [
+                {
+                  "x": 775,
+                  "y": 346
+                }
+              ],
+              "id": "161f7ef7-4adf-40e3-81c5-f15979ac1b5c",
+              "z": 29,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "00ae7380-5510-4772-8f98-d83df41035b6"
+              },
+              "target": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "vertices": [
+                {
+                  "x": 663,
+                  "y": 260
+                }
+              ],
+              "id": "53b58d93-f3af-4668-989c-c15ce69268e6",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Configuration",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 30,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "edced7d1-6206-43bc-94ab-aa515977042a"
+              },
+              "target": {
+                "id": "00ae7380-5510-4772-8f98-d83df41035b6"
+              },
+              "vertices": [
+                {
+                  "x": 737,
+                  "y": 306
+                }
+              ],
+              "id": "8eae4755-841b-44b2-8826-bd231926a480",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Logging",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 31,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "threatId": "0c37702a-dcdb-5a8c-a70d-bc7bc7aef7f7",
+                  "title": "T08 - Acciones sensibles carecen de rastro atribuible",
+                  "type": "Repudiation",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "DFD P5 · D3. Impacto medio. Probabilidad media.",
+                  "mitigation": "Eventos correlacionables sin secretos. REQ-13 · revisión manual, PT-07."
+                }
+              ]
+            }
+          ]
+        },
+        "size": {
+          "height": 590,
+          "width": 1425
+        }
+      }
+    ]
+  }
+}
