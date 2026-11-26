@@ -50,8 +50,13 @@ class DastPolicyTests(unittest.TestCase):
             runner.validate_report(self.report(), self.coverage, 'authenticated', {10020, 10021})
 
     def test_sanitizes_exact_escaped_and_unlisted_jwt_values(self):
+        import base64
+        import secrets
         secret = 'pass<&"word'
-        text = 'pass<&"word pass&lt;&amp;&quot;word eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTIzNDU2Nzg5MH0.abcdefghijklmnopqrstuv'
+        header = base64.urlsafe_b64encode(b'{"alg":"HS256"}').decode().rstrip('=')
+        payload = base64.urlsafe_b64encode(b'{"fixture":true}').decode().rstrip('=')
+        token = header + '.' + payload + '.' + secrets.token_urlsafe(24)
+        text = 'pass<&"word pass&lt;&amp;&quot;word ' + token
         clean = runner.sanitize(text, [secret])
         self.assertNotIn('pass', clean)
         self.assertNotIn('eyJ', clean)

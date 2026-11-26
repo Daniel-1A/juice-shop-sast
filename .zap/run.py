@@ -117,7 +117,7 @@ def main():
         env = dict(os.environ, DAST_PRIVATE=str(private), DAST_MODE=args.mode, DAST_CONFIG=str(config),
                    PYTHONDONTWRITEBYTECODE='1')
         script = {'full': 'zap-full-scan.py', 'api': 'zap-api-scan.py'}.get(args.mode, 'zap-baseline.py')
-        command = [sys.executable, '/zap/' + script, '-t', TARGET, '-I', '-T', '5',
+        command = ['/usr/bin/python3', '/zap/' + script, '-t', TARGET, '-I', '-T', '5',
                    '-r', str(private / 'report.html'), '-J', str(private / 'report.json'),
                    '--hook', str(config / 'hooks.py'), '-z',
                    '-config spider.maxDepth=3 -config spider.maxChildren=20 '

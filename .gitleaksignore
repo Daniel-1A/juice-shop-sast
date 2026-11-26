@@ -19,3 +19,6 @@ f47c13de937c77b83d18ccc9ffaf2902e76ec0c5:test/api/feedback.test.ts:generic-api-k
 f47c13de937c77b83d18ccc9ffaf2902e76ec0c5:test/api/feedback.test.ts:generic-api-key:143
 # Contrasena ficticia de prueba, reemplazada por generacion aleatoria.
 d01ec61bbb5c7dd485b14a74e5e8ec4b3abee27b:test/api/basket.test.ts:generic-api-key:66
+
+# EXC-05: JWT sintetico de prueba de saneamiento, sustituido por generacion en runtime.
+f2c72c4cc8fd7f08c43be3e8e348feb488b4cf9b:.zap/test_run.py:jwt:54
