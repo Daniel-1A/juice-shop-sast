@@ -1,3 +1,5 @@
+> **Laboratorio SSDLC del equipo:** despliegue local y validación de infraestructura en [infra/README.md](infra/README.md). Estado y evidencia de fase 5 en [security/iac/resultado-fase-5.md](security/iac/resultado-fase-5.md).
+
 # ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) OWASP Juice Shop
 
 ## Avance DevSecOps · 18 de noviembre de 2026

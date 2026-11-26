@@ -1,0 +1,25 @@
+name: juice-shop-lab
+services:
+  juice-shop:
+    image: ${JUICE_SHOP_IMAGE:-juice-shop:local}
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile
+    user: "65532:65532"
+    ports:
+      - "127.0.0.1:3000:3000"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    mem_limit: 1g
+    cpus: 2
+    init: true
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "/nodejs/bin/node", "-e", "require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      start_period: 120s
+      retries: 5
