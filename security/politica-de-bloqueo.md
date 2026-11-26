@@ -1,6 +1,6 @@
 # Política de bloqueo del pipeline
 
-**Principio:** Gitleaks y el gate SAST se enfocan en cambios nuevos del PR. SCA evalúa el inventario completo resuelto en esa ejecución, incluida la deuda heredada. Los reportes se guardan en GitHub Actions y los SARIF se envían a Code Scanning. La integración con DefectDojo se incorpora en la entrega final.
+**Principio:** Gitleaks y el gate SAST se enfocan en cambios nuevos del PR. SCA evalúa el inventario completo resuelto en esa ejecución, incluida la deuda heredada. GitHub conserva los reportes y recibe los SARIF configurados. El [proceso de publicación](publicacion.md) documenta la gestión en DefectDojo y Dependency-Track.
 
 Ningún gate usa `continue-on-error` ni `|| true`. Los pasos de reporte usan `if: always()` solo para publicar resultados *después* de que el gate falló.
 
@@ -17,14 +17,14 @@ Ningún gate usa `continue-on-error` ni `|| true`. Los pasos de reporte usan `if
 | Contenedor | Trivy 0.76.2 | CVE CRITICAL con corrección disponible en la imagen del build; errores de escaneo también fallan | HIGH o menor; CVE sin corrección, conservadas en reporte completo | Misma imagen que supera el smoke test; sin excepciones de Trivy |
 | DAST pasivo | ZAP 2.17.0 baseline y recorrido autenticado | Reglas 10020/10021 de `.zap/rules.tsv`; errores operativos, ausencia de respuestas reales, reporte inválido o autenticación no demostrada | Resto de alertas pasivas | Protege los dos encabezados ya configurados. No es un gate diferencial; evalúa el alcance completo examinado |
 | DAST activo manual | ZAP full y API | Errores operativos, timeout del runner, alcance/cobertura inválidos y autenticación fallida | Hallazgos activos para priorización del laboratorio; se conservan todos | Escaneos acotados de instancias propias. No se convierten errores de herramienta en éxito |
+| Publicación | DefectDojo y Dependency-Track | Si está habilitada en `main`, un reporte inválido o un error del API falla el job de publicación | Los hallazgos importados se trían. La política CRITICAL de Dependency-Track avisa | El job usa los artefactos del flujo de confianza y las credenciales de un entorno protegido |
 
 ## Checks obligatorios en `main`
-Configurar en *Settings → Rules → Rulesets* (o *Branches → Branch protection*) cuando el equipo haya comprobado la primera ejecución:
+La [API pública de GitHub](https://api.github.com/repos/Daniel-1A/juice-shop-sast/branches/main) confirmó que `main` está protegida para todos y exige `secretos (gitleaks)`, `sast (semgrep)`, `sca (syft + grype)`, `build (docker)`, `iac (checkov + trivy)` y `dast (zap)`. Los seis aprobaron en el [run 45846349943](https://github.com/Daniel-1A/juice-shop-sast/actions/runs/45846349943).
 
-- Requerir pull request con **1 aprobación** de otro integrante.
-- Requerir que pasen: `secretos (gitleaks)`, `sast (semgrep)`, `sca (syft + grype)`, `build (docker)` e `iac (checkov + trivy)` (añadir este último después de verificar su primera ejecución), y `dast (zap)` después de comprobar el primer PR de fase 6.
-- Requerir rama actualizada antes de fusionar.
-- Bloquear force-push y borrado de `main`.
+La [copia de la consulta](evidencia/fases-7-8/github-main.json) conserva el SHA y la asociación de los checks con Actions.
+
+El [PR #19](https://github.com/Daniel-1A/juice-shop-sast/pull/19) documenta una aprobación ajena al último push y conversaciones resueltas. El titular del repositorio debe confirmar esos ajustes en *Settings → Branches* y conservar la captura que acredita aprobación, actualización de la rama y bloqueo de force-push y borrado. La consulta pública no expone el detalle de reviews.
 
 ## Proceso de excepciones
 1. La excepción se registra en la tabla de abajo **y** en la configuración de la herramienta (`.grype.yaml`, `# nosemgrep: <regla>` con comentario, o `.gitleaksignore`).

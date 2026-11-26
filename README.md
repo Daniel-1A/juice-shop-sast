@@ -1,3 +1,5 @@
+> **Entrega final SSDLC** · [Política de bloqueo](security/politica-de-bloqueo.md), [gestión y publicación](security/publicacion.md), [remediaciones](security/remediacion.md), [plan de pentest](security/pentest-plan.md) y [madurez comparada](security/madurez/samm-final.md).
+
 > **Fase 6 - ZAP/DAST:** modos de CI, ejecución manual ampliada, reglas y reportes en [.zap/README.md](.zap/README.md).
 
 > **Laboratorio SSDLC del equipo:** despliegue local y validación de infraestructura en [infra/README.md](infra/README.md). Estado y evidencia de fase 5 en [security/iac/resultado-fase-5.md](security/iac/resultado-fase-5.md).
@@ -18,6 +20,7 @@ Proyecto final de Diseño y Proceso de Seguridad en el Desarrollo de Software, U
 |---|---|
 | Madurez inicial | [Diagnóstico SAMM](security/madurez/samm-inicial.md) |
 | Diseño | [Arquitectura](security/dise%C3%B1o/arquitectura.md), [DFD](security/dise%C3%B1o/dfd.md), [clasificación de datos](security/dise%C3%B1o/clasificacion-datos.md), [requisitos ASVS](security/dise%C3%B1o/requisitos-asvs.md) |
+| Amenazas | [Modelo Threat Dragon](security/threat-model/juice-shop-ssdlc.json) y [matriz STRIDE](security/threat-model/matriz-stride.md) |
 | Revisión SAST | [Análisis inicial de cinco alertas](security/sast/hallazgos-iniciales.md) |
 | Revisión SCA | [Primer SBOM y resultado de Grype](security/sca/resultado-inicial.md) |
 | Pipeline del avance | [Workflow](.github/workflows/devsecops.yml), [reglas de Semgrep](.semgrep/juice-shop-rules.yml), [política de bloqueo](security/politica-de-bloqueo.md) y [ejecuciones de Actions](https://github.com/Daniel-1A/juice-shop-sast/actions/workflows/devsecops.yml) |
@@ -27,11 +30,10 @@ El workflow corre en PR hacia `main`. Los artefactos `reporte-semgrep` y `report
 ### Iniciar la instancia de laboratorio
 
 ```powershell
-docker build -t juice-shop:avance .
-docker run --rm --name juice-shop-avance -p 127.0.0.1:3000:3000 juice-shop:avance
+docker compose -f infra/compose.yaml up --build --wait --wait-timeout 240
 ```
 
-Abrir `http://localhost:3000`. Las pruebas se realizan en esta instancia propia o en el runner del equipo.
+Abrir `http://127.0.0.1:3000`. Al terminar, detener la instancia con `docker compose -f infra/compose.yaml down`. Consulte el [manual de infraestructura](infra/README.md) para reproducir su validación.
 
 ### Reproducir SAST
 

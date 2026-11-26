@@ -1,0 +1,41 @@
+{
+  "sha": "916c47e2e1040aefd804ef00039f50617877059d",
+  "protected": true,
+  "checks": {
+    "enforcement_level": "everyone",
+    "contexts": [
+      "secretos (gitleaks)",
+      "sast (semgrep)",
+      "sca (syft + grype)",
+      "build (docker)",
+      "iac (checkov + trivy)",
+      "dast (zap)"
+    ],
+    "checks": [
+      {
+        "context": "secretos (gitleaks)",
+        "app_id": 15368
+      },
+      {
+        "context": "sast (semgrep)",
+        "app_id": 15368
+      },
+      {
+        "context": "sca (syft + grype)",
+        "app_id": 15368
+      },
+      {
+        "context": "build (docker)",
+        "app_id": 15368
+      },
+      {
+        "context": "iac (checkov + trivy)",
+        "app_id": 15368
+      },
+      {
+        "context": "dast (zap)",
+        "app_id": 15368
+      }
+    ]
+  }
+}
