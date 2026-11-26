@@ -117,7 +117,7 @@ def main():
         env = dict(os.environ, DAST_PRIVATE=str(private), DAST_MODE=args.mode, DAST_CONFIG=str(config),
                    PYTHONDONTWRITEBYTECODE='1')
         script = {'full': 'zap-full-scan.py', 'api': 'zap-api-scan.py'}.get(args.mode, 'zap-baseline.py')
-        command = ['/usr/bin/python3', '/zap/' + script, '-t', TARGET, '-I', '-T', '5',
+        command = ['/zap/' + script, '-t', TARGET, '-I', '-T', '5',
                    '-r', str(private / 'report.html'), '-J', str(private / 'report.json'),
                    '--hook', str(config / 'hooks.py'), '-z',
                    '-config spider.maxDepth=3 -config spider.maxChildren=20 '
@@ -136,8 +136,10 @@ def main():
             command += ['-f', 'openapi']
         try:
             with (private / 'scan.log').open('w') as log:
-                result = subprocess.run(command, cwd='/zap/wrk', env=env, stdout=log, stderr=subprocess.STDOUT,
-                                        timeout=900)
+                # EXC-06: fixed interpreter, packaged mode whitelist and argv without shell; see security policy.
+                # nosemgrep: dangerous-subprocess-use-tainted-env-args
+                result = subprocess.run(['/usr/bin/python3', *command], shell=False, cwd='/zap/wrk', env=env,
+                                        stdout=log, stderr=subprocess.STDOUT, timeout=900)
             summary['scannerExit'] = result.returncode
             report = json.loads((private / 'report.json').read_text())
             coverage = json.loads((private / 'coverage.json').read_text())
