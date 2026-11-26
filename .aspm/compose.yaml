@@ -1,0 +1,132 @@
+name: juice-aspm
+x-dojo-env: &dojo-env
+  DD_DATABASE_URL: postgresql://defectdojo:${DOJO_DB_PASSWORD:?Private environment required}@dojo-db:5432/defectdojo
+  DD_CELERY_BROKER_URL: redis://dojo-valkey:6379/0
+  DD_CACHE_URL: redis://dojo-valkey:6379/1
+  DD_SECRET_KEY: ${DOJO_SECRET_KEY:?Private environment required}
+  DD_CREDENTIAL_AES_256_KEY: ${DOJO_AES_KEY:?Private environment required}
+  DD_DEBUG: 'False'
+  DD_ALLOWED_HOSTS: localhost,127.0.0.1
+  DD_DATABASE_READINESS_TIMEOUT: '60'
+services:
+  dtrack-db:
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    profiles: [dtrack]
+    environment:
+      POSTGRES_DB: dtrack
+      POSTGRES_USER: dtrack
+      POSTGRES_PASSWORD: ${DTRACK_DB_PASSWORD:?Private environment required}
+    volumes: [dtrack-db:/var/lib/postgresql]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U dtrack -d dtrack]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    mem_limit: 512m
+  dtrack-api:
+    image: ghcr.io/dependencytrack/apiserver:5.2.2@sha256:cd5bed12ff30fd36980dbee2d6c3b177c37b99c63b60f5a5b15fbca0b31d0f38
+    profiles: [dtrack]
+    depends_on:
+      dtrack-db:
+        condition: service_healthy
+    environment:
+      DT_DATASOURCE_URL: jdbc:postgresql://dtrack-db:5432/dtrack
+      DT_DATASOURCE_USERNAME: dtrack
+      DT_DATASOURCE_PASSWORD: ${DTRACK_DB_PASSWORD:?Private environment required}
+      JAVA_TOOL_OPTIONS: -Xmx1536m
+    ports: [127.0.0.1:18080:8080]
+    volumes: [dtrack-data:/data]
+    mem_limit: 2g
+  dtrack-ui:
+    image: ghcr.io/dependencytrack/frontend:5.2.2@sha256:fd15b6cdc38692518a703eab0ed2867fa34e1276034cbe00773c61a9975cf719
+    profiles: [dtrack]
+    environment:
+      API_BASE_URL: http://localhost:18080
+    ports: [127.0.0.1:18081:8080]
+    mem_limit: 128m
+  dojo-db:
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    profiles: [dojo]
+    environment:
+      POSTGRES_DB: defectdojo
+      POSTGRES_USER: defectdojo
+      POSTGRES_PASSWORD: ${DOJO_DB_PASSWORD:?Private environment required}
+    volumes: [dojo-db:/var/lib/postgresql]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U defectdojo -d defectdojo]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    mem_limit: 512m
+  dojo-valkey:
+    image: valkey/valkey:9.1.2-alpine@sha256:48332870af354a799964c0012ae1194a0bf2bf894eb508f945810596dc2d8d11
+    profiles: [dojo]
+    mem_limit: 128m
+  dojo-initializer:
+    image: defectdojo/defectdojo-django:3.5.300@sha256:42b6b4aab33fd8cefd6ae953413cd3463d78eff1ae995559fa07c475f88eed9a
+    profiles: [dojo]
+    depends_on:
+      dojo-db:
+        condition: service_healthy
+    entrypoint: [/wait-for-it.sh, 'dojo-db:5432', --, /entrypoint-initializer.sh]
+    environment:
+      <<: *dojo-env
+      DD_ADMIN_USER: admin
+      DD_ADMIN_MAIL: admin@example.invalid
+      DD_ADMIN_PASSWORD: ${DOJO_ADMIN_PASSWORD:?Private environment required}
+      DD_INITIALIZE: 'true'
+    mem_limit: 1536m
+  dojo-uwsgi:
+    image: defectdojo/defectdojo-django:3.5.300@sha256:42b6b4aab33fd8cefd6ae953413cd3463d78eff1ae995559fa07c475f88eed9a
+    profiles: [dojo]
+    depends_on:
+      dojo-initializer:
+        condition: service_completed_successfully
+      dojo-valkey:
+        condition: service_started
+    entrypoint: [/wait-for-it.sh, 'dojo-db:5432', -t, '60', --, /entrypoint-uwsgi.sh]
+    environment:
+      <<: *dojo-env
+      DD_UWSGI_NUM_OF_PROCESSES: '2'
+    volumes: [dojo-media:/app/media]
+    mem_limit: 768m
+  dojo-celeryworker:
+    image: defectdojo/defectdojo-django:3.5.300@sha256:42b6b4aab33fd8cefd6ae953413cd3463d78eff1ae995559fa07c475f88eed9a
+    profiles: [dojo]
+    depends_on:
+      dojo-initializer:
+        condition: service_completed_successfully
+      dojo-valkey:
+        condition: service_started
+    entrypoint: [/wait-for-it.sh, 'dojo-db:5432', -t, '60', --, /entrypoint-celery-worker.sh]
+    environment:
+      <<: *dojo-env
+      DD_CELERY_WORKER_CONCURRENCY: '2'
+    volumes: [dojo-media:/app/media]
+    mem_limit: 1g
+  dojo-celerybeat:
+    image: defectdojo/defectdojo-django:3.5.300@sha256:42b6b4aab33fd8cefd6ae953413cd3463d78eff1ae995559fa07c475f88eed9a
+    profiles: [dojo]
+    depends_on:
+      dojo-initializer:
+        condition: service_completed_successfully
+      dojo-valkey:
+        condition: service_started
+    entrypoint: [/wait-for-it.sh, 'dojo-db:5432', -t, '60', --, /entrypoint-celery-beat.sh]
+    environment: *dojo-env
+    mem_limit: 384m
+  dojo-nginx:
+    image: defectdojo/defectdojo-nginx:3.5.300@sha256:7dfd466466de9f927050416acdf54498e8afc7015c5de2a9e064eaec6991e86a
+    profiles: [dojo]
+    depends_on: [dojo-uwsgi]
+    environment:
+      DD_UWSGI_HOST: dojo-uwsgi
+      DD_UWSGI_PORT: '3031'
+    ports: [127.0.0.1:18082:8080]
+    volumes: [dojo-media:/usr/share/nginx/html/media]
+    mem_limit: 128m
+volumes:
+  dtrack-db: {}
+  dtrack-data: {}
+  dojo-db: {}
+  dojo-media: {}
