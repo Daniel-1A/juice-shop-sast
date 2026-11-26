@@ -35,3 +35,6 @@ vagrant/
 # DAST tooling is mounted in the scanner, not packaged in the application.
 .zap/
 infra/__pycache__/
+
+# Inventory services are tooling, not application runtime.
+.aspm/

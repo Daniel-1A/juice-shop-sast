@@ -1,6 +1,14 @@
 # Publicación y gestión de hallazgos
 
-GitHub Actions conserva reportes en los PR y envía los SARIF configurados a Code Scanning. La publicación de inventarios con credenciales se ejecuta en un push exitoso a `main` del repositorio del equipo, con el entorno `seguridad-publicacion` habilitado. El job consume artefactos de esa ejecución y usa permisos `contents: read`. Un PR no recibe esos secretos.
+GitHub Actions conserva los reportes en PR y publica los SARIF configurados en Code Scanning. El job predeterminado `publicacion (inventarios)` inicia Dependency-Track y DefectDojo en el runner con imágenes oficiales fijadas y credenciales aleatorias de esa ejecución. Importa los artefactos del mismo run y verifica las respuestas mediante lectura posterior. No requiere destinos HTTPS externos ni secretos permanentes.
+
+## Publicación automática comprobable
+
+Los servicios se inician secuencialmente para reducir memoria. Dependency-Track debe terminar de procesar el CycloneDX y devolver un inventario no vacío; se crea una política de advertencia para severidad crítica. DefectDojo recibe formatos nativos completos y los reportes ZAP saneados convertidos a XML. Se comprueba el número de hallazgos importados y los reintentos reutilizan el test de la misma herramienta y commit. Los avisos de parsing de Semgrep se incluyen en los recibos; la publicación no equivale a cobertura total ni validación humana.
+
+El artefacto `reporte-publicacion` contiene los recibos con SHA, run, hashes, IDs, conteos y confirmación de procesamiento. Los errores de arranque, API, procesamiento, conteos o limpieza fallan el job. Una carpeta distinta por ejecución evita publicar éxitos antiguos. No se suben credenciales, configuraciones resueltas ni logs privados de servicios.
+
+Las bases de datos y los volúmenes del runner son **efímeros** y se eliminan al terminar. La instancia de CI demuestra el procesamiento automático; no es un servidor histórico compartido. Las instancias locales persistentes y sus evidencias se conservan por separado. La modalidad remota permanece opcional para cuando existan servidores del equipo.
 
 ## Evidencia local comprobada
 
@@ -23,7 +31,9 @@ Dependency-Track registró el procesamiento del CycloneDX para `OWASP Juice Shop
 
 El SBOM de referencia está en [`reporte-sca`](https://github.com/Daniel-1A/juice-shop-sast/actions/runs/45846349943/artifacts/15131817514). SHA-256 del archivo extraído `sbom.cdx.json`: `8df73af4f0914abe0629a8800859e2e27dd140bdcfa444d8cc9abe049b6f7df1`.
 
-## Configurar la publicación en GitHub
+## Modalidad remota opcional con servidores del equipo
+
+El job `publicacion remota (opcional)` sigue deshabilitado hasta contar con destinos accesibles y completar lo siguiente:
 
 1. Crear el entorno `seguridad-publicacion` y limitarlo a `main`. Precrear el producto y engagement en DefectDojo y el proyecto de Dependency-Track. Configurar cuentas de servicio limitadas a la importación y carga de sus respectivos inventarios.
 2. Guardar las variables del entorno `DOJO_URL`, `DOJO_PRODUCT_NAME`, `DOJO_ENGAGEMENT_NAME`, `DTRACK_URL` y `DTRACK_PROJECT_ID`. Guardar `DOJO_API_TOKEN` y `DTRACK_API_KEY` como secretos del mismo entorno.

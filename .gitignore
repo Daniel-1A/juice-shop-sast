@@ -80,3 +80,5 @@ reports/
 # Python caches from DAST and infrastructure validation
 /.zap/__pycache__/
 /infra/__pycache__/
+
+/.aspm/__pycache__/
