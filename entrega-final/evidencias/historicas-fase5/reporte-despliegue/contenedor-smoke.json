@@ -1,0 +1,273 @@
+[
+    {
+        "Id": "df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3",
+        "Created": "2026-11-26T12:52:45.965089933Z",
+        "Path": "/nodejs/bin/node",
+        "Args": [
+            "/juice-shop/build/app.js"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 4338,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-26T12:52:45.995400247Z",
+            "FinishedAt": "0001-01-01T00:00:00Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-11-26T12:52:51.178450008Z",
+                        "End": "2026-11-26T12:52:51.263015599Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:3645d5a169c81eb4d01851e2e66f56c55a66ba1a6f3df596853e65cd3b491ca3",
+        "ResolvConfPath": "/var/lib/docker/containers/df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3/hostname",
+        "HostsPath": "/var/lib/docker/containers/df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3/hosts",
+        "LogPath": "/var/lib/docker/containers/df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3/df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3-json.log",
+        "Name": "/juice-shop-ci-juice-shop-1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "juice-shop-ci_default",
+            "PortBindings": {
+                "3000/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "3000"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": [
+                "no-new-privileges:true"
+            ],
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 1073741824,
+            "NanoCpus": 2000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 2147483648,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 256,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ],
+            "Init": true
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "df269b99cf5664a5c1ec3dce264c13c2da47b6126e8bdcbb710b37dc774a39d3",
+                "LowerDir": "/var/lib/docker/overlay2/9d609b1e0f64e9f33b9c9050111124d19e4f48eb0f095ae62301e5c5d31ce837-init/diff:/var/lib/docker/overlay2/dp1cwv8vkpjnstc9sniyxdi7w/diff:/var/lib/docker/overlay2/rf4522f56l37x1l3y1izaf0ny/diff:/var/lib/docker/overlay2/73854ff0a697b917c1e57c39c9a97fe802ef5e4a24b77f3724048dab161e2d6c/diff:/var/lib/docker/overlay2/528266de57eba829720371837666daa6fcfde69e9b73767257ad3c51a3cd3c1a/diff:/var/lib/docker/overlay2/e85ecd4a8b1323250f1dc830d42a76d2ff327a2e965533180791443c2a30fe93/diff:/var/lib/docker/overlay2/88128a42e8acd029262476b401030cc8b919d29a552a28a036eaf73aabd2b880/diff:/var/lib/docker/overlay2/f9be75dce8a3d829a05e465d4fbf2c28d8abff4c55b1972610454c1bbe9053c0/diff:/var/lib/docker/overlay2/2040ff57fc9df1747b79ff030d9cb00584bb9bd58e3255ecdba3338a7d85ffaf/diff:/var/lib/docker/overlay2/be3d765ebab9285efdd999c71dbc43c3094f6dba7265ff8b8f5f54d827cb865f/diff:/var/lib/docker/overlay2/f70e38792ae640ba138d3f45d15cf2075f888c9b342cfcc1eae44ccdee2b986d/diff:/var/lib/docker/overlay2/5469e21193106cbb39a5a08b3ddff7621a1d8d1e57f88cbe0e5f4d8877597c4c/diff:/var/lib/docker/overlay2/876e4b6bc6073d6b7948fc7a52346d7917b34e804464b5882babeaef2fba6b20/diff:/var/lib/docker/overlay2/d9fa0fd3cdfbe1a39d9b2e81aa5cb42226a627d3cc3f1ddf8d6a0e14a7ea5fe1/diff:/var/lib/docker/overlay2/0b44440037aae7722b388de0411dca71e338720d0cbfdbfd08dcb4a76f6024ac/diff:/var/lib/docker/overlay2/6ebd4476d52722ddd5b277bfa9b75ba300fc9eaea1c21a8b630f6765212dc2af/diff:/var/lib/docker/overlay2/33ec8ea639876d536120adc0b8776fdafb328c710128d2aa895d2f673db74d56/diff:/var/lib/docker/overlay2/7771a9fd34b98cfca5b8c1fb6cc4c06d4509831627a2fc631f223e917b986e17/diff:/var/lib/docker/overlay2/df7b0a8e916a352419f83c64ddb51e82e117ca238b36679c80dfaff4cbc60a9c/diff:/var/lib/docker/overlay2/91c61fb4638c3ed52325df2cc526450ee8587210103875178dcb9a2436d45354/diff:/var/lib/docker/overlay2/c77999fd511cf5775017caee85d56f9962543d4d228a5359cb35e0d2d9b0c2ae/diff:/var/lib/docker/overlay2/72b0ac7b89bc628667083fe3602597f61ccf8d8498ea3b3fd1a612aea31ac396/diff:/var/lib/docker/overlay2/d342c3a3a059f5fd6b0bb0e5ce04164cdf3a7c37d9209976627ad1fff1dee9e2/diff:/var/lib/docker/overlay2/60933140efbf9d7ee82a182fc29c4d0e21dd1cdd19bf9590a677728990bcc8df/diff:/var/lib/docker/overlay2/e373707912b28b249b44c8cef148a88c5bc8ae619635133dde075d598be0c6e8/diff",
+                "MergedDir": "/var/lib/docker/overlay2/9d609b1e0f64e9f33b9c9050111124d19e4f48eb0f095ae62301e5c5d31ce837/merged",
+                "UpperDir": "/var/lib/docker/overlay2/9d609b1e0f64e9f33b9c9050111124d19e4f48eb0f095ae62301e5c5d31ce837/diff",
+                "WorkDir": "/var/lib/docker/overlay2/9d609b1e0f64e9f33b9c9050111124d19e4f48eb0f095ae62301e5c5d31ce837/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "df269b99cf56",
+            "Domainname": "",
+            "User": "65532:65532",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "3000/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+            ],
+            "Cmd": [
+                "/juice-shop/build/app.js"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/nodejs/bin/node",
+                    "-e",
+                    "require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+                ],
+                "Interval": 15000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 120000000000,
+                "Retries": 5
+            },
+            "Image": "juice-shop:b46f2345de1ede326e4d18896d3fa3a2c99dfde2",
+            "Volumes": null,
+            "WorkingDir": "/juice-shop",
+            "Entrypoint": [
+                "/nodejs/bin/node"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "b06c02be1f5e6919655814595e9e5c37e932757e74fb4c5fd5a8b3159505272c",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:3645d5a169c81eb4d01851e2e66f56c55a66ba1a6f3df596853e65cd3b491ca3",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "juice-shop-ci",
+                "com.docker.compose.project.config_files": "/home/runner/work/juice-shop-sast/juice-shop-sast/infra/compose.yaml",
+                "com.docker.compose.project.working_dir": "/home/runner/work/juice-shop-sast/juice-shop-sast/infra",
+                "com.docker.compose.service": "juice-shop",
+                "com.docker.compose.version": "2.38.2",
+                "org.opencontainers.image.created": "2026-11-26T12:49:39Z",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision": "b46f2345de1ede326e4d18896d3fa3a2c99dfde2",
+                "org.opencontainers.image.title": "OWASP Juice Shop - laboratorio SSDLC",
+                "org.opencontainers.image.version": "20.3.0"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "cb84ec63685e9e8110caf134cb806bc6a854f82c50038824c9057963db8aa5ae",
+            "SandboxKey": "/var/run/docker/netns/cb84ec63685e",
+            "Ports": {
+                "3000/tcp": [
+                    {
+                        "HostIp": "127.0.0.1",
+                        "HostPort": "3000"
+                    }
+                ]
+            },
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "juice-shop-ci_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "juice-shop-ci-juice-shop-1",
+                        "juice-shop"
+                    ],
+                    "MacAddress": "ee:89:ff:48:68:fb",
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "207f1408415d8f1221dc57608dd2f1a63f23fa47bcdf5807970e188a3bc45cfd",
+                    "EndpointID": "3a178fc1d384bc259c15656a8db5b1d9344d2ab999113174d2f5634f537c4d44",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "juice-shop-ci-juice-shop-1",
+                        "juice-shop",
+                        "df269b99cf56"
+                    ]
+                }
+            }
+        }
+    }
+]

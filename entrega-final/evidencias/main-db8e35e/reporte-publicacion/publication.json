@@ -1,0 +1,17 @@
+{
+  "complete": true,
+  "sourceSHA": "db8e35ede0cdf1e8ce7b5a4e8987e8bdb6bc936c",
+  "sourceRun": 45893213451,
+  "engagement": 1,
+  "tools": [
+    "gitleaks",
+    "semgrep",
+    "grype",
+    "checkov",
+    "trivy",
+    "zap-baseline",
+    "zap-authenticated"
+  ],
+  "feedsFullySynchronized": "not asserted",
+  "persistentHistory": "local deployment only; CI is ephemeral"
+}

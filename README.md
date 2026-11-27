@@ -1,3 +1,5 @@
+> **Entrega final del equipo:** [informe PDF de 25 páginas e índice de todas las evidencias](entrega-final/README.md). Reportes, capturas, SBOM y resultados de CI disponibles directamente en GitHub.
+
 > **Entrega final SSDLC** · [Política de bloqueo](security/politica-de-bloqueo.md), [gestión y publicación](security/publicacion.md), [remediaciones](security/remediacion.md), [plan de pentest](security/pentest-plan.md) y [madurez comparada](security/madurez/samm-final.md).
 
 > **Fase 6 - ZAP/DAST:** modos de CI, ejecución manual ampliada, reglas y reportes en [.zap/README.md](.zap/README.md).
@@ -10,7 +12,7 @@
 
 Proyecto final de Diseño y Proceso de Seguridad en el Desarrollo de Software, Universidad Galileo.
 
-**Equipo:** Daniel Martinez, Douglas Perez e Isabel Paiz.
+**Equipo:** Daniel Martinez, Douglas Perez y Ana Paiz.
 
 **Repositorio del equipo:** [Daniel-1A/juice-shop-sast](https://github.com/Daniel-1A/juice-shop-sast).
 

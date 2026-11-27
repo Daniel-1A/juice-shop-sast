@@ -1,2 +1,6 @@
 # Handle line endings for .junie directory
 .junie/** text eol=lf
+
+# Preserve exact bytes and hashes of generated submission evidence.
+entrega-final/evidencias/** -text -diff
+entrega-final/*.pdf -text -diff

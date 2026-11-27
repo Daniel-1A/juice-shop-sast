@@ -38,3 +38,6 @@ infra/__pycache__/
 
 # Inventory services are tooling, not application runtime.
 .aspm/
+
+# Submission evidence includes historical SBOMs; it is not application runtime.
+/entrega-final/

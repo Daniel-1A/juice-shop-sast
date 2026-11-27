@@ -1,0 +1,29 @@
+{
+  "number": 19,
+  "title": "Fase 6: ZAP DAST con autenticacion y evidencia saneada",
+  "merged": true,
+  "mergeCommit": "916c47e2e1040aefd804ef00039f50617877059d",
+  "url": "https://github.com/Daniel-1A/juice-shop-sast/pull/19",
+  "reviews": [
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-26T14:59:46Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-26T15:00:13Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-26T15:00:38Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-26T15:11:03Z"
+    }
+  ]
+}

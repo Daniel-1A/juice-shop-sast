@@ -1,0 +1,42 @@
+[
+  {
+    "name": "sast (semgrep)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "secretos (gitleaks)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "sca (syft + grype)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "build (docker)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "iac (checkov + trivy)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "dast (zap)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "publicacion (inventarios)",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  {
+    "name": "publicacion remota (opcional)",
+    "status": "completed",
+    "conclusion": "skipped"
+  }
+]

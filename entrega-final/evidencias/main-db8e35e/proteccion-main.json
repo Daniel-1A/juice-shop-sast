@@ -1,0 +1,17 @@
+{
+  "requiredReviews": 1,
+  "lastPushApproval": true,
+  "requiredChecks": [
+    "secretos (gitleaks)",
+    "sast (semgrep)",
+    "sca (syft + grype)",
+    "build (docker)",
+    "iac (checkov + trivy)",
+    "dast (zap)",
+    "publicacion (inventarios)"
+  ],
+  "strict": true,
+  "enforceAdmins": true,
+  "forcePush": false,
+  "deletion": false
+}

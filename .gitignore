@@ -82,3 +82,8 @@ reports/
 /infra/__pycache__/
 
 /.aspm/__pycache__/
+
+# Evidencias revisadas y saneadas de la entrega final
+!/entrega-final/evidencias/**/*.sarif
+!/entrega-final/evidencias/**/scan.log
+!/entrega-final/evidencias/**/zap.out

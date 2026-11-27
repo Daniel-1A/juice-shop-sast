@@ -1,3 +1,5 @@
+> **Cierre de entrega (27/11/2026):** los pendientes de CI descritos al final son históricos y quedaron completados. Las fases 5 y 6 están fusionadas; la ejecución de `main` [45893213451](https://github.com/Daniel-1A/juice-shop-sast/actions/runs/45893213451) aprobó y su evidencia permanente está en el [índice final](../../entrega-final/README.md). Los reportes locales mencionados en el texto se conservan en esa entrega; no se requiere acceder al equipo del autor.
+
 # Fase 5: evidencia de IaC y contenedor
 
 Fecha: 23 de noviembre de 2026. Base: `ab337bd`. Rama: `codex/fase-5-infra`.

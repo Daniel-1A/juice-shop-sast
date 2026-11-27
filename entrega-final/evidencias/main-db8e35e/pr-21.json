@@ -1,0 +1,14 @@
+{
+  "number": 21,
+  "title": "Fase 7: comprobar publicacion automatica sin servidores externos",
+  "merged": true,
+  "mergeCommit": "db8e35ede0cdf1e8ce7b5a4e8987e8bdb6bc936c",
+  "url": "https://github.com/Daniel-1A/juice-shop-sast/pull/21",
+  "reviews": [
+    {
+      "reviewer": "DouglasPrez",
+      "state": "APPROVED",
+      "submitted_at": "2026-11-26T20:44:00Z"
+    }
+  ]
+}
