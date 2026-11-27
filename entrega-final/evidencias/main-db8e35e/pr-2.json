@@ -1,0 +1,49 @@
+{
+  "number": 2,
+  "title": "Avance del 18 de noviembre: diseno, pipeline y remediacion de dependencias",
+  "merged": true,
+  "mergeCommit": "ab337bd16601b5c1610b80e21e9c1f911a363555",
+  "url": "https://github.com/Daniel-1A/juice-shop-sast/pull/2",
+  "reviews": [
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-15T01:47:35Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-15T01:47:48Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-18T22:03:20Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-18T22:03:58Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-18T22:03:58Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-18T22:06:13Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-18T22:24:37Z"
+    },
+    {
+      "reviewer": "github-advanced-security[bot]",
+      "state": "COMMENTED",
+      "submitted_at": "2026-11-18T22:38:26Z"
+    }
+  ]
+}

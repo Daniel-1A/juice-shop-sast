@@ -1,0 +1,13 @@
+{
+  "schema": "https://raw.githubusercontent.com/OWASP/threat-dragon/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json",
+  "valid": true,
+  "threatCount": 13,
+  "categories": [
+    "Denial of service",
+    "Elevation of privilege",
+    "Information disclosure",
+    "Repudiation",
+    "Spoofing",
+    "Tampering"
+  ]
+}

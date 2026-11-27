@@ -1,0 +1,1735 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "grype",
+          "version": "0.118.0",
+          "informationUri": "https://github.com/anchore/grype",
+          "rules": [
+            {
+              "id": "GHSA-rc47-6667-2j5j-http-cache-semantics",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-rc47-6667-2j5j high vulnerability for http-cache-semantics package"
+              },
+              "fullDescription": {
+                "text": "http-cache-semantics vulnerable to Regular Expression Denial of Service"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-rc47-6667-2j5j",
+              "help": {
+                "text": "Vulnerability GHSA-rc47-6667-2j5j\nSeverity: high\nPackage: http-cache-semantics\nVersion: 3.8.1\nFix Version: 4.1.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-rc47-6667-2j5j](https://github.com/advisories/GHSA-rc47-6667-2j5j)",
+                "markdown": "**Vulnerability GHSA-rc47-6667-2j5j**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | http-cache-semantics  | 3.8.1  | 4.1.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-rc47-6667-2j5j](https://github.com/advisories/GHSA-rc47-6667-2j5j)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/http-cache-semantics@3.8.1"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-96hv-2xvq-fx4p-ws",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-96hv-2xvq-fx4p high vulnerability for ws package"
+              },
+              "fullDescription": {
+                "text": "ws: Memory exhaustion DoS from tiny fragments and data chunks"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-96hv-2xvq-fx4p",
+              "help": {
+                "text": "Vulnerability GHSA-96hv-2xvq-fx4p\nSeverity: high\nPackage: ws\nVersion: 8.18.0\nFix Version: 8.21.0\nType: npm\nLocation: /frontend/package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-96hv-2xvq-fx4p](https://github.com/advisories/GHSA-96hv-2xvq-fx4p)",
+                "markdown": "**Vulnerability GHSA-96hv-2xvq-fx4p**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | ws  | 8.18.0  | 8.21.0  | npm  | /frontend/package-lock.json  | github:language:javascript  | [GHSA-96hv-2xvq-fx4p](https://github.com/advisories/GHSA-96hv-2xvq-fx4p)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/ws@8.18.0"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-cgfm-xwp7-2cvr-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-cgfm-xwp7-2cvr high vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "Sanitize-html Vulnerable To REDoS Attacks"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-cgfm-xwp7-2cvr",
+              "help": {
+                "text": "Vulnerability GHSA-cgfm-xwp7-2cvr\nSeverity: high\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.7.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-cgfm-xwp7-2cvr](https://github.com/advisories/GHSA-cgfm-xwp7-2cvr)",
+                "markdown": "**Vulnerability GHSA-cgfm-xwp7-2cvr**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | sanitize-html  | 1.27.5  | 2.7.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-cgfm-xwp7-2cvr](https://github.com/advisories/GHSA-cgfm-xwp7-2cvr)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-pfrx-2q88-qq97-got",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-pfrx-2q88-qq97 medium vulnerability for got package"
+              },
+              "fullDescription": {
+                "text": "Got allows a redirect to a UNIX socket"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-pfrx-2q88-qq97",
+              "help": {
+                "text": "Vulnerability GHSA-pfrx-2q88-qq97\nSeverity: medium\nPackage: got\nVersion: 8.3.2\nFix Version: 11.8.5\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-pfrx-2q88-qq97](https://github.com/advisories/GHSA-pfrx-2q88-qq97)",
+                "markdown": "**Vulnerability GHSA-pfrx-2q88-qq97**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | got  | 8.3.2  | 11.8.5  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-pfrx-2q88-qq97](https://github.com/advisories/GHSA-pfrx-2q88-qq97)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/got@8.3.2"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-rjqq-98f6-6j3r-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-rjqq-98f6-6j3r medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "Improper Input Validation in sanitize-html"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-rjqq-98f6-6j3r",
+              "help": {
+                "text": "Vulnerability GHSA-rjqq-98f6-6j3r\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.3.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-rjqq-98f6-6j3r](https://github.com/advisories/GHSA-rjqq-98f6-6j3r)",
+                "markdown": "**Vulnerability GHSA-rjqq-98f6-6j3r**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.3.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-rjqq-98f6-6j3r](https://github.com/advisories/GHSA-rjqq-98f6-6j3r)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-mjxr-4v3x-q3m4-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-mjxr-4v3x-q3m4 medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "Improper Input Validation in sanitize-html"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-mjxr-4v3x-q3m4",
+              "help": {
+                "text": "Vulnerability GHSA-mjxr-4v3x-q3m4\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.3.2\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-mjxr-4v3x-q3m4](https://github.com/advisories/GHSA-mjxr-4v3x-q3m4)",
+                "markdown": "**Vulnerability GHSA-mjxr-4v3x-q3m4**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.3.2  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-mjxr-4v3x-q3m4](https://github.com/advisories/GHSA-mjxr-4v3x-q3m4)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-rm97-x556-q36h-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-rm97-x556-q36h medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "sanitize-html Information Exposure vulnerability"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-rm97-x556-q36h",
+              "help": {
+                "text": "Vulnerability GHSA-rm97-x556-q36h\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.12.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-rm97-x556-q36h](https://github.com/advisories/GHSA-rm97-x556-q36h)",
+                "markdown": "**Vulnerability GHSA-rm97-x556-q36h**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.12.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-rm97-x556-q36h](https://github.com/advisories/GHSA-rm97-x556-q36h)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-7r86-cg39-jmmj-minimatch",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-7r86-cg39-jmmj high vulnerability for minimatch package"
+              },
+              "fullDescription": {
+                "text": "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-7r86-cg39-jmmj",
+              "help": {
+                "text": "Vulnerability GHSA-7r86-cg39-jmmj\nSeverity: high\nPackage: minimatch\nVersion: 3.0.5\nFix Version: 3.1.3\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-7r86-cg39-jmmj](https://github.com/advisories/GHSA-7r86-cg39-jmmj)",
+                "markdown": "**Vulnerability GHSA-7r86-cg39-jmmj**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | minimatch  | 3.0.5  | 3.1.3  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-7r86-cg39-jmmj](https://github.com/advisories/GHSA-7r86-cg39-jmmj)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/minimatch@3.0.5"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-3ppc-4f35-3m26-minimatch",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-3ppc-4f35-3m26 high vulnerability for minimatch package"
+              },
+              "fullDescription": {
+                "text": "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-3ppc-4f35-3m26",
+              "help": {
+                "text": "Vulnerability GHSA-3ppc-4f35-3m26\nSeverity: high\nPackage: minimatch\nVersion: 3.0.5\nFix Version: 3.1.3\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-3ppc-4f35-3m26](https://github.com/advisories/GHSA-3ppc-4f35-3m26)",
+                "markdown": "**Vulnerability GHSA-3ppc-4f35-3m26**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | minimatch  | 3.0.5  | 3.1.3  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-3ppc-4f35-3m26](https://github.com/advisories/GHSA-3ppc-4f35-3m26)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/minimatch@3.0.5"
+                ],
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "GHSA-7fh5-64p2-3v2j-postcss",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-7fh5-64p2-3v2j medium vulnerability for postcss package"
+              },
+              "fullDescription": {
+                "text": "PostCSS line return parsing error"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j",
+              "help": {
+                "text": "Vulnerability GHSA-7fh5-64p2-3v2j\nSeverity: medium\nPackage: postcss\nVersion: 7.0.39\nFix Version: 8.4.31\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-7fh5-64p2-3v2j](https://github.com/advisories/GHSA-7fh5-64p2-3v2j)",
+                "markdown": "**Vulnerability GHSA-7fh5-64p2-3v2j**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | postcss  | 7.0.39  | 8.4.31  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-7fh5-64p2-3v2j](https://github.com/advisories/GHSA-7fh5-64p2-3v2j)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/postcss@7.0.39"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-6g55-p6wh-862q-postcss",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-6g55-p6wh-862q high vulnerability for postcss package"
+              },
+              "fullDescription": {
+                "text": "PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+              "help": {
+                "text": "Vulnerability GHSA-6g55-p6wh-862q\nSeverity: high\nPackage: postcss\nVersion: 7.0.39\nFix Version: 8.5.12\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-6g55-p6wh-862q](https://github.com/advisories/GHSA-6g55-p6wh-862q)",
+                "markdown": "**Vulnerability GHSA-6g55-p6wh-862q**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | postcss  | 7.0.39  | 8.5.12  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-6g55-p6wh-862q](https://github.com/advisories/GHSA-6g55-p6wh-862q)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/postcss@7.0.39"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-23c5-xmqv-rm74-minimatch",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-23c5-xmqv-rm74 high vulnerability for minimatch package"
+              },
+              "fullDescription": {
+                "text": "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-23c5-xmqv-rm74",
+              "help": {
+                "text": "Vulnerability GHSA-23c5-xmqv-rm74\nSeverity: high\nPackage: minimatch\nVersion: 3.0.5\nFix Version: 3.1.4\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-23c5-xmqv-rm74](https://github.com/advisories/GHSA-23c5-xmqv-rm74)",
+                "markdown": "**Vulnerability GHSA-23c5-xmqv-rm74**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | minimatch  | 3.0.5  | 3.1.4  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-23c5-xmqv-rm74](https://github.com/advisories/GHSA-23c5-xmqv-rm74)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/minimatch@3.0.5"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-8cf7-32gw-wr33-jsonwebtoken",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-8cf7-32gw-wr33 high vulnerability for jsonwebtoken package"
+              },
+              "fullDescription": {
+                "text": "jsonwebtoken unrestricted key type could lead to legacy keys usage"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-8cf7-32gw-wr33",
+              "help": {
+                "text": "Vulnerability GHSA-8cf7-32gw-wr33\nSeverity: high\nPackage: jsonwebtoken\nVersion: 8.5.1\nFix Version: 9.0.0\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-8cf7-32gw-wr33](https://github.com/advisories/GHSA-8cf7-32gw-wr33)",
+                "markdown": "**Vulnerability GHSA-8cf7-32gw-wr33**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | jsonwebtoken  | 8.5.1  | 9.0.0  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-8cf7-32gw-wr33](https://github.com/advisories/GHSA-8cf7-32gw-wr33)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/jsonwebtoken@8.5.1"
+                ],
+                "security-severity": "8.1"
+              }
+            },
+            {
+              "id": "GHSA-qr28-fpjm-wq7f-decode-uri-component",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-qr28-fpjm-wq7f high vulnerability for decode-uri-component package"
+              },
+              "fullDescription": {
+                "text": "decode-uri-component vulnerable to denial of service via quadratic replacement of percent-encoded runs"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-qr28-fpjm-wq7f",
+              "help": {
+                "text": "Vulnerability GHSA-qr28-fpjm-wq7f\nSeverity: high\nPackage: decode-uri-component\nVersion: 0.2.2\nFix Version: 0.5.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-qr28-fpjm-wq7f](https://github.com/advisories/GHSA-qr28-fpjm-wq7f)",
+                "markdown": "**Vulnerability GHSA-qr28-fpjm-wq7f**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | decode-uri-component  | 0.2.2  | 0.5.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-qr28-fpjm-wq7f](https://github.com/advisories/GHSA-qr28-fpjm-wq7f)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/decode-uri-component@0.2.2"
+                ],
+                "security-severity": "8.2"
+              }
+            },
+            {
+              "id": "GHSA-r28c-9q8g-f849-postcss",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-r28c-9q8g-f849 high vulnerability for postcss package"
+              },
+              "fullDescription": {
+                "text": "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-r28c-9q8g-f849",
+              "help": {
+                "text": "Vulnerability GHSA-r28c-9q8g-f849\nSeverity: high\nPackage: postcss\nVersion: 7.0.39\nFix Version: 8.5.18\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-r28c-9q8g-f849](https://github.com/advisories/GHSA-r28c-9q8g-f849)",
+                "markdown": "**Vulnerability GHSA-r28c-9q8g-f849**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | postcss  | 7.0.39  | 8.5.18  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-r28c-9q8g-f849](https://github.com/advisories/GHSA-r28c-9q8g-f849)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/postcss@7.0.39"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-r292-9mhp-454m-tar",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-r292-9mhp-454m high vulnerability for tar package"
+              },
+              "fullDescription": {
+                "text": "node-tar: Uncontrolled recursion in mapHas/filesFilter allows uncatchable stack-overflow DoS via crafted long-path tar with member selection"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-r292-9mhp-454m",
+              "help": {
+                "text": "Vulnerability GHSA-r292-9mhp-454m\nSeverity: high\nPackage: tar\nVersion: 7.5.19\nFix Version: 7.5.21\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-r292-9mhp-454m](https://github.com/advisories/GHSA-r292-9mhp-454m)",
+                "markdown": "**Vulnerability GHSA-r292-9mhp-454m**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| high  | tar  | 7.5.19  | 7.5.21  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-r292-9mhp-454m](https://github.com/advisories/GHSA-r292-9mhp-454m)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/tar@7.5.19"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-hjrf-2m68-5959-jsonwebtoken",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-hjrf-2m68-5959 medium vulnerability for jsonwebtoken package"
+              },
+              "fullDescription": {
+                "text": "jsonwebtoken's insecure implementation of key retrieval function could lead to Forgeable Public/Private Tokens from RSA to HMAC"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-hjrf-2m68-5959",
+              "help": {
+                "text": "Vulnerability GHSA-hjrf-2m68-5959\nSeverity: medium\nPackage: jsonwebtoken\nVersion: 8.5.1\nFix Version: 9.0.0\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-hjrf-2m68-5959](https://github.com/advisories/GHSA-hjrf-2m68-5959)",
+                "markdown": "**Vulnerability GHSA-hjrf-2m68-5959**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | jsonwebtoken  | 8.5.1  | 9.0.0  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-hjrf-2m68-5959](https://github.com/advisories/GHSA-hjrf-2m68-5959)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/jsonwebtoken@8.5.1"
+                ],
+                "security-severity": "5.0"
+              }
+            },
+            {
+              "id": "GHSA-3g3m-2fjr-6pw4-glob",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-3g3m-2fjr-6pw4 medium vulnerability for glob package"
+              },
+              "fullDescription": {
+                "text": "Glob: AbortSignal cancellation bypass allows post-timeout filesystem traversal"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4",
+              "help": {
+                "text": "Vulnerability GHSA-3g3m-2fjr-6pw4\nSeverity: medium\nPackage: glob\nVersion: 10.5.0\nFix Version: 14.0.2\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4)",
+                "markdown": "**Vulnerability GHSA-3g3m-2fjr-6pw4**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | glob  | 10.5.0  | 14.0.2  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/glob@10.5.0"
+                ],
+                "security-severity": "6.3"
+              }
+            },
+            {
+              "id": "GHSA-qwph-4952-7xr6-jsonwebtoken",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-qwph-4952-7xr6 medium vulnerability for jsonwebtoken package"
+              },
+              "fullDescription": {
+                "text": "jsonwebtoken vulnerable to signature validation bypass due to insecure default algorithm in jwt.verify()"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-qwph-4952-7xr6",
+              "help": {
+                "text": "Vulnerability GHSA-qwph-4952-7xr6\nSeverity: medium\nPackage: jsonwebtoken\nVersion: 8.5.1\nFix Version: 9.0.0\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-qwph-4952-7xr6](https://github.com/advisories/GHSA-qwph-4952-7xr6)",
+                "markdown": "**Vulnerability GHSA-qwph-4952-7xr6**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | jsonwebtoken  | 8.5.1  | 9.0.0  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-qwph-4952-7xr6](https://github.com/advisories/GHSA-qwph-4952-7xr6)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/jsonwebtoken@8.5.1"
+                ],
+                "security-severity": "6.4"
+              }
+            },
+            {
+              "id": "GHSA-58qx-3vcg-4xpx-ws",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-58qx-3vcg-4xpx medium vulnerability for ws package"
+              },
+              "fullDescription": {
+                "text": "ws: Uninitialized memory disclosure"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-58qx-3vcg-4xpx",
+              "help": {
+                "text": "Vulnerability GHSA-58qx-3vcg-4xpx\nSeverity: medium\nPackage: ws\nVersion: 8.18.0\nFix Version: 8.20.1\nType: npm\nLocation: /frontend/package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-58qx-3vcg-4xpx](https://github.com/advisories/GHSA-58qx-3vcg-4xpx)",
+                "markdown": "**Vulnerability GHSA-58qx-3vcg-4xpx**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | ws  | 8.18.0  | 8.20.1  | npm  | /frontend/package-lock.json  | github:language:javascript  | [GHSA-58qx-3vcg-4xpx](https://github.com/advisories/GHSA-58qx-3vcg-4xpx)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/ws@8.18.0"
+                ],
+                "security-severity": "4.4"
+              }
+            },
+            {
+              "id": "GHSA-g3hv-75wg-m249-minimatch",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-g3hv-75wg-m249 medium vulnerability for minimatch package"
+              },
+              "fullDescription": {
+                "text": "minimatch has potential denial of service via globparts amplification"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+              "help": {
+                "text": "Vulnerability GHSA-g3hv-75wg-m249\nSeverity: medium\nPackage: minimatch\nVersion: 9.0.9\nFix Version: 11.0.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)",
+                "markdown": "**Vulnerability GHSA-g3hv-75wg-m249**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | minimatch  | 9.0.9  | 11.0.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/minimatch@9.0.9"
+                ],
+                "security-severity": "6.9"
+              }
+            },
+            {
+              "id": "GHSA-vcc3-ghjq-m6fr-decode-uri-component",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-vcc3-ghjq-m6fr medium vulnerability for decode-uri-component package"
+              },
+              "fullDescription": {
+                "text": "decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+              "help": {
+                "text": "Vulnerability GHSA-vcc3-ghjq-m6fr\nSeverity: medium\nPackage: decode-uri-component\nVersion: 0.2.2\nFix Version: 0.5.0\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-vcc3-ghjq-m6fr](https://github.com/advisories/GHSA-vcc3-ghjq-m6fr)",
+                "markdown": "**Vulnerability GHSA-vcc3-ghjq-m6fr**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | decode-uri-component  | 0.2.2  | 0.5.0  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-vcc3-ghjq-m6fr](https://github.com/advisories/GHSA-vcc3-ghjq-m6fr)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/decode-uri-component@0.2.2"
+                ],
+                "security-severity": "6.6"
+              }
+            },
+            {
+              "id": "GHSA-w5hq-g745-h8pq-uuid",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-w5hq-g745-h8pq medium vulnerability for uuid package"
+              },
+              "fullDescription": {
+                "text": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+              "help": {
+                "text": "Vulnerability GHSA-w5hq-g745-h8pq\nSeverity: medium\nPackage: uuid\nVersion: 8.3.2\nFix Version: 11.1.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-w5hq-g745-h8pq](https://github.com/advisories/GHSA-w5hq-g745-h8pq)",
+                "markdown": "**Vulnerability GHSA-w5hq-g745-h8pq**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | uuid  | 8.3.2  | 11.1.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-w5hq-g745-h8pq](https://github.com/advisories/GHSA-w5hq-g745-h8pq)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/uuid@8.3.2"
+                ],
+                "security-severity": "7.5"
+              }
+            },
+            {
+              "id": "GHSA-fxqj-rqcc-2cmp-postcss",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-fxqj-rqcc-2cmp medium vulnerability for postcss package"
+              },
+              "fullDescription": {
+                "text": "PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-fxqj-rqcc-2cmp",
+              "help": {
+                "text": "Vulnerability GHSA-fxqj-rqcc-2cmp\nSeverity: medium\nPackage: postcss\nVersion: 7.0.39\nFix Version: 8.5.23\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-fxqj-rqcc-2cmp](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp)",
+                "markdown": "**Vulnerability GHSA-fxqj-rqcc-2cmp**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | postcss  | 7.0.39  | 8.5.23  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-fxqj-rqcc-2cmp](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/postcss@7.0.39"
+                ],
+                "security-severity": "6.3"
+              }
+            },
+            {
+              "id": "GHSA-5v7r-6r5c-r473-file-type",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-5v7r-6r5c-r473 medium vulnerability for file-type package"
+              },
+              "fullDescription": {
+                "text": "file-type affected by infinite loop in ASF parser on malformed input with zero-size sub-header"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-5v7r-6r5c-r473",
+              "help": {
+                "text": "Vulnerability GHSA-5v7r-6r5c-r473\nSeverity: medium\nPackage: file-type\nVersion: 16.5.4\nFix Version: 21.3.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-5v7r-6r5c-r473](https://github.com/advisories/GHSA-5v7r-6r5c-r473)",
+                "markdown": "**Vulnerability GHSA-5v7r-6r5c-r473**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | file-type  | 16.5.4  | 21.3.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-5v7r-6r5c-r473](https://github.com/advisories/GHSA-5v7r-6r5c-r473)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/file-type@16.5.4"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-x3q4-9hxx-gx8m-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-x3q4-9hxx-gx8m medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "ApostropheCMS sanitize-html: nonTextTags discard region ends early on an implied close, letting \u003cnoscript\u003e content render"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-x3q4-9hxx-gx8m",
+              "help": {
+                "text": "Vulnerability GHSA-x3q4-9hxx-gx8m\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.18.0\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-x3q4-9hxx-gx8m](https://github.com/advisories/GHSA-x3q4-9hxx-gx8m)",
+                "markdown": "**Vulnerability GHSA-x3q4-9hxx-gx8m**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.18.0  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-x3q4-9hxx-gx8m](https://github.com/advisories/GHSA-x3q4-9hxx-gx8m)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "GHSA-jxwj-j7wr-gfrw-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-jxwj-j7wr-gfrw medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "ApostropheCMS: Mutation-XSS / allowedTags bypass via literal `\u003c/textarea/\u003e` solidus close"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-jxwj-j7wr-gfrw",
+              "help": {
+                "text": "Vulnerability GHSA-jxwj-j7wr-gfrw\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.17.6\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-jxwj-j7wr-gfrw](https://github.com/advisories/GHSA-jxwj-j7wr-gfrw)",
+                "markdown": "**Vulnerability GHSA-jxwj-j7wr-gfrw**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.17.6  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-jxwj-j7wr-gfrw](https://github.com/advisories/GHSA-jxwj-j7wr-gfrw)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "6.1"
+              }
+            },
+            {
+              "id": "GHSA-qhxp-v273-g94h-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-qhxp-v273-g94h medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "sanitize-html is vulnerable to XSS through incomprehensive sanitization"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-qhxp-v273-g94h",
+              "help": {
+                "text": "Vulnerability GHSA-qhxp-v273-g94h\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.0.0-beta\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-qhxp-v273-g94h](https://github.com/advisories/GHSA-qhxp-v273-g94h)",
+                "markdown": "**Vulnerability GHSA-qhxp-v273-g94h**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.0.0-beta  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-qhxp-v273-g94h](https://github.com/advisories/GHSA-qhxp-v273-g94h)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "6.1"
+              }
+            },
+            {
+              "id": "GHSA-cv27-6wvh-8x7j-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-cv27-6wvh-8x7j medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "ApostropheCMS: Incomplete CVE-2026-53606: `meta http-equiv=refresh` `content` still ships `javascript:` / `data:` URLs"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-cv27-6wvh-8x7j",
+              "help": {
+                "text": "Vulnerability GHSA-cv27-6wvh-8x7j\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.18.0\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-cv27-6wvh-8x7j](https://github.com/advisories/GHSA-cv27-6wvh-8x7j)",
+                "markdown": "**Vulnerability GHSA-cv27-6wvh-8x7j**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.18.0  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-cv27-6wvh-8x7j](https://github.com/advisories/GHSA-cv27-6wvh-8x7j)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.4"
+              }
+            },
+            {
+              "id": "GHSA-g8qq-57p8-ggw5-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-g8qq-57p8-ggw5 medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "ApostropheCMS: Stored XSS via SVG SMIL URI-list scheme-policy bypass"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-g8qq-57p8-ggw5",
+              "help": {
+                "text": "Vulnerability GHSA-g8qq-57p8-ggw5\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.17.7\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-g8qq-57p8-ggw5](https://github.com/advisories/GHSA-g8qq-57p8-ggw5)",
+                "markdown": "**Vulnerability GHSA-g8qq-57p8-ggw5**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.17.7  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-g8qq-57p8-ggw5](https://github.com/advisories/GHSA-g8qq-57p8-ggw5)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.4"
+              }
+            },
+            {
+              "id": "GHSA-qx2v-qp2m-jg93-postcss",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-qx2v-qp2m-jg93 medium vulnerability for postcss package"
+              },
+              "fullDescription": {
+                "text": "PostCSS has XSS via Unescaped \u003c/style\u003e in its CSS Stringify Output"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-qx2v-qp2m-jg93",
+              "help": {
+                "text": "Vulnerability GHSA-qx2v-qp2m-jg93\nSeverity: medium\nPackage: postcss\nVersion: 7.0.39\nFix Version: 8.5.10\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-qx2v-qp2m-jg93](https://github.com/advisories/GHSA-qx2v-qp2m-jg93)",
+                "markdown": "**Vulnerability GHSA-qx2v-qp2m-jg93**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | postcss  | 7.0.39  | 8.5.10  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-qx2v-qp2m-jg93](https://github.com/advisories/GHSA-qx2v-qp2m-jg93)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/postcss@7.0.39"
+                ],
+                "security-severity": "6.1"
+              }
+            },
+            {
+              "id": "GHSA-vccv-cmxp-4j9h-sanitize-html",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-vccv-cmxp-4j9h medium vulnerability for sanitize-html package"
+              },
+              "fullDescription": {
+                "text": "sanitize-html has incomplete URI scheme validation in that allows javascript: URIs through action, formaction, data, poster, and background attributes"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-vccv-cmxp-4j9h",
+              "help": {
+                "text": "Vulnerability GHSA-vccv-cmxp-4j9h\nSeverity: medium\nPackage: sanitize-html\nVersion: 1.27.5\nFix Version: 2.17.5\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-vccv-cmxp-4j9h](https://github.com/advisories/GHSA-vccv-cmxp-4j9h)",
+                "markdown": "**Vulnerability GHSA-vccv-cmxp-4j9h**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| medium  | sanitize-html  | 1.27.5  | 2.17.5  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-vccv-cmxp-4j9h](https://github.com/advisories/GHSA-vccv-cmxp-4j9h)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/sanitize-html@1.27.5"
+                ],
+                "security-severity": "5.4"
+              }
+            },
+            {
+              "id": "GHSA-vpq2-c234-7xj6-@tootallnate/once",
+              "name": "JavascriptMatcherExactDirectMatch",
+              "shortDescription": {
+                "text": "GHSA-vpq2-c234-7xj6 low vulnerability for @tootallnate/once package"
+              },
+              "fullDescription": {
+                "text": "@tootallnate/once vulnerable to Incorrect Control Flow Scoping"
+              },
+              "helpUri": "https://github.com/advisories/GHSA-vpq2-c234-7xj6",
+              "help": {
+                "text": "Vulnerability GHSA-vpq2-c234-7xj6\nSeverity: low\nPackage: @tootallnate/once\nVersion: 1.1.2\nFix Version: 2.0.1\nType: npm\nLocation: /package-lock.json\nData Namespace: github:language:javascript\nLink: [GHSA-vpq2-c234-7xj6](https://github.com/advisories/GHSA-vpq2-c234-7xj6)",
+                "markdown": "**Vulnerability GHSA-vpq2-c234-7xj6**\n| Severity | Package | Version | Fix Version | Type | Location | Data Namespace | Link |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| low  | @tootallnate/once  | 1.1.2  | 2.0.1  | npm  | /package-lock.json  | github:language:javascript  | [GHSA-vpq2-c234-7xj6](https://github.com/advisories/GHSA-vpq2-c234-7xj6)  |\n"
+              },
+              "properties": {
+                "purls": [
+                  "pkg:npm/%40tootallnate/once@1.1.2"
+                ],
+                "security-severity": "3.3"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "GHSA-rc47-6667-2j5j-http-cache-semantics",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: http-cache-semantics, version 3.8.1 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "9a919efdaf05f62f6459acbcb1196f96d1be3fa0b9811bec97fd25dee4b2bc27:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-96hv-2xvq-fx4p-ws",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: ws, version 8.18.0 was found at: /frontend/package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/frontend/package-lock.json",
+                  "fullyQualifiedName": ".://frontend/package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "e24acc4f61c575926f15d5a1cddf15eb97931af41a0cc7f23abf7c9bb00829ee:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-cgfm-xwp7-2cvr-sanitize-html",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-pfrx-2q88-qq97-got",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: got, version 8.3.2 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "c28ac5a72a2a5fb84792411ee83eb212ad559f222354a26317459a78625e8527:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-rjqq-98f6-6j3r-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-mjxr-4v3x-q3m4-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-rm97-x556-q36h-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-7r86-cg39-jmmj-minimatch",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: minimatch, version 3.0.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "2ca29c96b178187c721935ba2976172928b57c614b63546a1c627bf896f2bda7:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-3ppc-4f35-3m26-minimatch",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: minimatch, version 3.0.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "2ca29c96b178187c721935ba2976172928b57c614b63546a1c627bf896f2bda7:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-7fh5-64p2-3v2j-postcss",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: postcss, version 7.0.39 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "d8abc1a65e479b51c6a052b252e44aa28304d59ea7952f4b323b1c1ab42cec24:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-6g55-p6wh-862q-postcss",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: postcss, version 7.0.39 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "d8abc1a65e479b51c6a052b252e44aa28304d59ea7952f4b323b1c1ab42cec24:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-23c5-xmqv-rm74-minimatch",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: minimatch, version 3.0.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "2ca29c96b178187c721935ba2976172928b57c614b63546a1c627bf896f2bda7:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-8cf7-32gw-wr33-jsonwebtoken",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: jsonwebtoken, version 8.5.1 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "5b09e34327b7c46d3fc0e603cc0b7e2022bb9ae6eda5735aa41f49d5b66a472c:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-qr28-fpjm-wq7f-decode-uri-component",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: decode-uri-component, version 0.2.2 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "c63705b748f395aede391959647a1a0c9884a38bff310d1773b0371e6fc5b8a6:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-r28c-9q8g-f849-postcss",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: postcss, version 7.0.39 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "d8abc1a65e479b51c6a052b252e44aa28304d59ea7952f4b323b1c1ab42cec24:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-r292-9mhp-454m-tar",
+          "level": "error",
+          "message": {
+            "text": "A high vulnerability in npm package: tar, version 7.5.19 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "06cf2dbf0f261615345a048891901fe5464fa950997e1c169a101771fc451b09:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-hjrf-2m68-5959-jsonwebtoken",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: jsonwebtoken, version 8.5.1 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "5b09e34327b7c46d3fc0e603cc0b7e2022bb9ae6eda5735aa41f49d5b66a472c:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-3g3m-2fjr-6pw4-glob",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: glob, version 10.5.0 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "cab7185a45f380e7e66c37416069974a90f0f785d4c127e6b7856ccf8afb3512:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-qwph-4952-7xr6-jsonwebtoken",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: jsonwebtoken, version 8.5.1 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "5b09e34327b7c46d3fc0e603cc0b7e2022bb9ae6eda5735aa41f49d5b66a472c:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-58qx-3vcg-4xpx-ws",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: ws, version 8.18.0 was found at: /frontend/package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/frontend/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/frontend/package-lock.json",
+                  "fullyQualifiedName": ".://frontend/package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "e24acc4f61c575926f15d5a1cddf15eb97931af41a0cc7f23abf7c9bb00829ee:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-g3hv-75wg-m249-minimatch",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: minimatch, version 9.0.9 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "376e222634094e0ed3d0105c21b7050135084c926352e545e455bbe177c03f55:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-vcc3-ghjq-m6fr-decode-uri-component",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: decode-uri-component, version 0.2.2 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "c63705b748f395aede391959647a1a0c9884a38bff310d1773b0371e6fc5b8a6:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-w5hq-g745-h8pq-uuid",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: uuid, version 8.3.2 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "7f186802e6a3de5c93d9394b4d77a581fbfeef58b09e4f21181b819f7e29caaf:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-fxqj-rqcc-2cmp-postcss",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: postcss, version 7.0.39 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "d8abc1a65e479b51c6a052b252e44aa28304d59ea7952f4b323b1c1ab42cec24:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-5v7r-6r5c-r473-file-type",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: file-type, version 16.5.4 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "fc6dad320035364b3af3e5588c960fa8c390c45f5e6126bd174dd9aea32e1bbb:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-x3q4-9hxx-gx8m-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-jxwj-j7wr-gfrw-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-qhxp-v273-g94h-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-cv27-6wvh-8x7j-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-g8qq-57p8-ggw5-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-qx2v-qp2m-jg93-postcss",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: postcss, version 7.0.39 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "d8abc1a65e479b51c6a052b252e44aa28304d59ea7952f4b323b1c1ab42cec24:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-vccv-cmxp-4j9h-sanitize-html",
+          "level": "warning",
+          "message": {
+            "text": "A medium vulnerability in npm package: sanitize-html, version 1.27.5 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1ff9e91bd3f6cc0f052f40442e69be8217442275edd8cab7ee67cecf9ffe115a:1"
+          }
+        },
+        {
+          "ruleId": "GHSA-vpq2-c234-7xj6-@tootallnate/once",
+          "level": "note",
+          "message": {
+            "text": "A low vulnerability in npm package: @tootallnate/once, version 1.1.2 was found at: /package-lock.json"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/package-lock.json"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "/package-lock.json",
+                  "fullyQualifiedName": ".://package-lock.json"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "14a965532d97b5fb77fa66b29ff91eda8807cb6277ffcf483ca624e212ccfd02:1"
+          }
+        }
+      ]
+    }
+  ]
+}

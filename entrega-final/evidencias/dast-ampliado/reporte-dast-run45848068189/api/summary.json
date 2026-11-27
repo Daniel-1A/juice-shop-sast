@@ -1,0 +1,8 @@
+{
+  "mode": "api",
+  "passed": true,
+  "scannerExit": 0,
+  "urls": 49,
+  "alerts": 6,
+  "blocking": []
+}

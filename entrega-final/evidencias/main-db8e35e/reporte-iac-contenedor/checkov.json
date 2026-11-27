@@ -1,0 +1,3544 @@
+{
+    "check_type": "dockerfile",
+    "results": {
+        "passed_checks": [
+            {
+                "check_id": "CKV_DOCKER_1",
+                "bc_check_id": null,
+                "check_name": "Ensure port 22 is not exposed",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": null
+                },
+                "code_block": [
+                    [
+                        1,
+                        "FROM node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496 AS installer\n"
+                    ],
+                    [
+                        2,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ],
+                    [
+                        4,
+                        "COPY . .\n"
+                    ],
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ],
+                    [
+                        14,
+                        "\n"
+                    ],
+                    [
+                        15,
+                        "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n"
+                    ],
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ],
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ],
+                    [
+                        18,
+                        "LABEL org.opencontainers.image.title=\"OWASP Juice Shop - laboratorio SSDLC\" \\\n"
+                    ],
+                    [
+                        19,
+                        "    org.opencontainers.image.version=\"20.3.0\" \\\n"
+                    ],
+                    [
+                        20,
+                        "    org.opencontainers.image.licenses=\"MIT\" \\\n"
+                    ],
+                    [
+                        21,
+                        "    org.opencontainers.image.revision=$VCS_REF \\\n"
+                    ],
+                    [
+                        22,
+                        "    org.opencontainers.image.created=$BUILD_DATE\n"
+                    ],
+                    [
+                        23,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        24,
+                        "COPY --from=installer --chown=65532:65532 /juice-shop .\n"
+                    ],
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ],
+                    [
+                        26,
+                        "EXPOSE 3000\n"
+                    ],
+                    [
+                        27,
+                        "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n"
+                    ],
+                    [
+                        28,
+                        "    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n"
+                    ],
+                    [
+                        29,
+                        "CMD [\"/juice-shop/build/app.js\"]"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    1,
+                    29
+                ],
+                "resource": "/src/infra/Dockerfile.",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.ExposePort22",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_5",
+                "bc_check_id": null,
+                "check_name": "Ensure update instructions are not use alone in the Dockerfile",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": null
+                },
+                "code_block": [
+                    [
+                        1,
+                        "FROM node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496 AS installer\n"
+                    ],
+                    [
+                        2,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ],
+                    [
+                        4,
+                        "COPY . .\n"
+                    ],
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ],
+                    [
+                        14,
+                        "\n"
+                    ],
+                    [
+                        15,
+                        "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n"
+                    ],
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ],
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ],
+                    [
+                        18,
+                        "LABEL org.opencontainers.image.title=\"OWASP Juice Shop - laboratorio SSDLC\" \\\n"
+                    ],
+                    [
+                        19,
+                        "    org.opencontainers.image.version=\"20.3.0\" \\\n"
+                    ],
+                    [
+                        20,
+                        "    org.opencontainers.image.licenses=\"MIT\" \\\n"
+                    ],
+                    [
+                        21,
+                        "    org.opencontainers.image.revision=$VCS_REF \\\n"
+                    ],
+                    [
+                        22,
+                        "    org.opencontainers.image.created=$BUILD_DATE\n"
+                    ],
+                    [
+                        23,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        24,
+                        "COPY --from=installer --chown=65532:65532 /juice-shop .\n"
+                    ],
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ],
+                    [
+                        26,
+                        "EXPOSE 3000\n"
+                    ],
+                    [
+                        27,
+                        "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n"
+                    ],
+                    [
+                        28,
+                        "    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n"
+                    ],
+                    [
+                        29,
+                        "CMD [\"/juice-shop/build/app.js\"]"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    1,
+                    29
+                ],
+                "resource": "/src/infra/Dockerfile.",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.UpdateNotAlone",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_9",
+                "bc_check_id": null,
+                "check_name": "Ensure that APT isn't used",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": null
+                },
+                "code_block": [
+                    [
+                        1,
+                        "FROM node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496 AS installer\n"
+                    ],
+                    [
+                        2,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ],
+                    [
+                        4,
+                        "COPY . .\n"
+                    ],
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ],
+                    [
+                        14,
+                        "\n"
+                    ],
+                    [
+                        15,
+                        "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n"
+                    ],
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ],
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ],
+                    [
+                        18,
+                        "LABEL org.opencontainers.image.title=\"OWASP Juice Shop - laboratorio SSDLC\" \\\n"
+                    ],
+                    [
+                        19,
+                        "    org.opencontainers.image.version=\"20.3.0\" \\\n"
+                    ],
+                    [
+                        20,
+                        "    org.opencontainers.image.licenses=\"MIT\" \\\n"
+                    ],
+                    [
+                        21,
+                        "    org.opencontainers.image.revision=$VCS_REF \\\n"
+                    ],
+                    [
+                        22,
+                        "    org.opencontainers.image.created=$BUILD_DATE\n"
+                    ],
+                    [
+                        23,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        24,
+                        "COPY --from=installer --chown=65532:65532 /juice-shop .\n"
+                    ],
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ],
+                    [
+                        26,
+                        "EXPOSE 3000\n"
+                    ],
+                    [
+                        27,
+                        "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n"
+                    ],
+                    [
+                        28,
+                        "    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n"
+                    ],
+                    [
+                        29,
+                        "CMD [\"/juice-shop/build/app.js\"]"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    1,
+                    29
+                ],
+                "resource": "/src/infra/Dockerfile.",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.RunUsingAPT",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_8",
+                "bc_check_id": null,
+                "check_name": "Ensure the last USER is not root",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": [
+                        {
+                            "instruction": "USER",
+                            "startline": 24,
+                            "endline": 24,
+                            "content": "USER 65532:65532\n",
+                            "value": "65532:65532"
+                        }
+                    ]
+                },
+                "code_block": [
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    25,
+                    25
+                ],
+                "resource": "/src/infra/Dockerfile.USER",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.RootUser",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_7",
+                "bc_check_id": null,
+                "check_name": "Ensure the base image uses a non latest version tag",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": [
+                        {
+                            "instruction": "FROM",
+                            "startline": 14,
+                            "endline": 14,
+                            "content": "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n",
+                            "value": "gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693"
+                        }
+                    ]
+                },
+                "code_block": [
+                    [
+                        15,
+                        "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    15,
+                    15
+                ],
+                "resource": "/src/infra/Dockerfile.FROM",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.ReferenceLatestTag",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_11",
+                "bc_check_id": null,
+                "check_name": "Ensure From Alias are unique for multistage builds.",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": null
+                },
+                "code_block": [
+                    [
+                        1,
+                        "FROM node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496 AS installer\n"
+                    ],
+                    [
+                        2,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ],
+                    [
+                        4,
+                        "COPY . .\n"
+                    ],
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ],
+                    [
+                        14,
+                        "\n"
+                    ],
+                    [
+                        15,
+                        "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n"
+                    ],
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ],
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ],
+                    [
+                        18,
+                        "LABEL org.opencontainers.image.title=\"OWASP Juice Shop - laboratorio SSDLC\" \\\n"
+                    ],
+                    [
+                        19,
+                        "    org.opencontainers.image.version=\"20.3.0\" \\\n"
+                    ],
+                    [
+                        20,
+                        "    org.opencontainers.image.licenses=\"MIT\" \\\n"
+                    ],
+                    [
+                        21,
+                        "    org.opencontainers.image.revision=$VCS_REF \\\n"
+                    ],
+                    [
+                        22,
+                        "    org.opencontainers.image.created=$BUILD_DATE\n"
+                    ],
+                    [
+                        23,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        24,
+                        "COPY --from=installer --chown=65532:65532 /juice-shop .\n"
+                    ],
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ],
+                    [
+                        26,
+                        "EXPOSE 3000\n"
+                    ],
+                    [
+                        27,
+                        "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n"
+                    ],
+                    [
+                        28,
+                        "    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n"
+                    ],
+                    [
+                        29,
+                        "CMD [\"/juice-shop/build/app.js\"]"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    1,
+                    29
+                ],
+                "resource": "/src/infra/Dockerfile.",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.AliasIsUnique",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_10",
+                "bc_check_id": null,
+                "check_name": "Ensure that WORKDIR values are absolute paths",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": null
+                },
+                "code_block": [
+                    [
+                        1,
+                        "FROM node:24-bookworm@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496 AS installer\n"
+                    ],
+                    [
+                        2,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ],
+                    [
+                        4,
+                        "COPY . .\n"
+                    ],
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ],
+                    [
+                        14,
+                        "\n"
+                    ],
+                    [
+                        15,
+                        "FROM gcr.io/distroless/nodejs24-debian13:nonroot@sha256:39b0407357c9fadf1a9708d22088f02de21f0e1e8a688474eea2d8701e7d5693\n"
+                    ],
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ],
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ],
+                    [
+                        18,
+                        "LABEL org.opencontainers.image.title=\"OWASP Juice Shop - laboratorio SSDLC\" \\\n"
+                    ],
+                    [
+                        19,
+                        "    org.opencontainers.image.version=\"20.3.0\" \\\n"
+                    ],
+                    [
+                        20,
+                        "    org.opencontainers.image.licenses=\"MIT\" \\\n"
+                    ],
+                    [
+                        21,
+                        "    org.opencontainers.image.revision=$VCS_REF \\\n"
+                    ],
+                    [
+                        22,
+                        "    org.opencontainers.image.created=$BUILD_DATE\n"
+                    ],
+                    [
+                        23,
+                        "WORKDIR /juice-shop\n"
+                    ],
+                    [
+                        24,
+                        "COPY --from=installer --chown=65532:65532 /juice-shop .\n"
+                    ],
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ],
+                    [
+                        26,
+                        "EXPOSE 3000\n"
+                    ],
+                    [
+                        27,
+                        "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n"
+                    ],
+                    [
+                        28,
+                        "    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n"
+                    ],
+                    [
+                        29,
+                        "CMD [\"/juice-shop/build/app.js\"]"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    1,
+                    29
+                ],
+                "resource": "/src/infra/Dockerfile.",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.WorkdirIsAbsolute",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_3",
+                "bc_check_id": null,
+                "check_name": "Ensure that a user for the container has been created",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": [
+                        {
+                            "instruction": "USER",
+                            "startline": 24,
+                            "endline": 24,
+                            "content": "USER 65532:65532\n",
+                            "value": "65532:65532"
+                        }
+                    ]
+                },
+                "code_block": [
+                    [
+                        25,
+                        "USER 65532:65532\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    25,
+                    25
+                ],
+                "resource": "/src/infra/Dockerfile.USER",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.UserExists",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV_DOCKER_2",
+                "bc_check_id": null,
+                "check_name": "Ensure that HEALTHCHECK instructions have been added to container images",
+                "check_result": {
+                    "result": "PASSED",
+                    "results_configuration": [
+                        {
+                            "instruction": "HEALTHCHECK",
+                            "startline": 26,
+                            "endline": 27,
+                            "content": "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n",
+                            "value": "--interval=15s --timeout=5s --start-period=120s --retries=5     CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]"
+                        }
+                    ]
+                },
+                "code_block": [
+                    [
+                        27,
+                        "HEALTHCHECK --interval=15s --timeout=5s --start-period=120s --retries=5 \\\n"
+                    ],
+                    [
+                        28,
+                        "    CMD [\"/nodejs/bin/node\", \"-e\", \"require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))\"]\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    27,
+                    28
+                ],
+                "resource": "/src/infra/Dockerfile.HEALTHCHECK",
+                "evaluations": null,
+                "check_class": "checkov.dockerfile.checks.HealthcheckExists",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_17",
+                "bc_check_id": null,
+                "check_name": "Ensure that 'chpasswd' is not used to set or remove passwords",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_14",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for git by setting the environment variable 'GIT_SSL_NO_VERIFY' to any value",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ENV",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                            "value": "CYPRESS_INSTALL_BINARY=0",
+                            "__startline__": 2,
+                            "__endline__": 2
+                        },
+                        "label_": "resource: ENV",
+                        "id_": "ENV",
+                        "source_": "Dockerfile",
+                        "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                        "value": "CYPRESS_INSTALL_BINARY=0",
+                        "__startline__": 2,
+                        "__endline__": 2,
+                        "resource_type": "ENV",
+                        "hash": "02343cd07ed9afb73ae8076d1cd8a0491a79f389447d37a1dfb1ab857f58eb66"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    3,
+                    3
+                ],
+                "resource": "/src/infra/Dockerfile.ENV",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_14",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for git by setting the environment variable 'GIT_SSL_NO_VERIFY' to any value",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_14",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for git by setting the environment variable 'GIT_SSL_NO_VERIFY' to any value",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG BUILD_DATE\n",
+                            "value": "BUILD_DATE",
+                            "__startline__": 15,
+                            "__endline__": 15
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG BUILD_DATE\n",
+                        "value": "BUILD_DATE",
+                        "__startline__": 15,
+                        "__endline__": 15,
+                        "resource_type": "ARG",
+                        "hash": "1a5757408cde73c3135a4c72774bd4ddfe9a70806c631e7e5c5a4ebf32848b24"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    16,
+                    16
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_14",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for git by setting the environment variable 'GIT_SSL_NO_VERIFY' to any value",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG VCS_REF\n",
+                            "value": "VCS_REF",
+                            "__startline__": 16,
+                            "__endline__": 16
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG VCS_REF\n",
+                        "value": "VCS_REF",
+                        "__startline__": 16,
+                        "__endline__": 16,
+                        "resource_type": "ARG",
+                        "hash": "99d88a0040397d60d6eac1c4b7e1063a78ce654fb3f62efb4bea1e353f57ed6b"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    17,
+                    17
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_16",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with pip via the 'PIP_TRUSTED_HOST' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ENV",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                            "value": "CYPRESS_INSTALL_BINARY=0",
+                            "__startline__": 2,
+                            "__endline__": 2
+                        },
+                        "label_": "resource: ENV",
+                        "id_": "ENV",
+                        "source_": "Dockerfile",
+                        "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                        "value": "CYPRESS_INSTALL_BINARY=0",
+                        "__startline__": 2,
+                        "__endline__": 2,
+                        "resource_type": "ENV",
+                        "hash": "02343cd07ed9afb73ae8076d1cd8a0491a79f389447d37a1dfb1ab857f58eb66"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    3,
+                    3
+                ],
+                "resource": "/src/infra/Dockerfile.ENV",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_16",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with pip via the 'PIP_TRUSTED_HOST' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_16",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with pip via the 'PIP_TRUSTED_HOST' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG BUILD_DATE\n",
+                            "value": "BUILD_DATE",
+                            "__startline__": 15,
+                            "__endline__": 15
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG BUILD_DATE\n",
+                        "value": "BUILD_DATE",
+                        "__startline__": 15,
+                        "__endline__": 15,
+                        "resource_type": "ARG",
+                        "hash": "1a5757408cde73c3135a4c72774bd4ddfe9a70806c631e7e5c5a4ebf32848b24"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    16,
+                    16
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_16",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with pip via the 'PIP_TRUSTED_HOST' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG VCS_REF\n",
+                            "value": "VCS_REF",
+                            "__startline__": 16,
+                            "__endline__": 16
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG VCS_REF\n",
+                        "value": "VCS_REF",
+                        "__startline__": 16,
+                        "__endline__": 16,
+                        "resource_type": "ARG",
+                        "hash": "99d88a0040397d60d6eac1c4b7e1063a78ce654fb3f62efb4bea1e353f57ed6b"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    17,
+                    17
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_12",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for npm via the 'NPM_CONFIG_STRICT_SSL' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ENV",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                            "value": "CYPRESS_INSTALL_BINARY=0",
+                            "__startline__": 2,
+                            "__endline__": 2
+                        },
+                        "label_": "resource: ENV",
+                        "id_": "ENV",
+                        "source_": "Dockerfile",
+                        "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                        "value": "CYPRESS_INSTALL_BINARY=0",
+                        "__startline__": 2,
+                        "__endline__": 2,
+                        "resource_type": "ENV",
+                        "hash": "02343cd07ed9afb73ae8076d1cd8a0491a79f389447d37a1dfb1ab857f58eb66"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    3,
+                    3
+                ],
+                "resource": "/src/infra/Dockerfile.ENV",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_12",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for npm via the 'NPM_CONFIG_STRICT_SSL' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_12",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for npm via the 'NPM_CONFIG_STRICT_SSL' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG BUILD_DATE\n",
+                            "value": "BUILD_DATE",
+                            "__startline__": 15,
+                            "__endline__": 15
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG BUILD_DATE\n",
+                        "value": "BUILD_DATE",
+                        "__startline__": 15,
+                        "__endline__": 15,
+                        "resource_type": "ARG",
+                        "hash": "1a5757408cde73c3135a4c72774bd4ddfe9a70806c631e7e5c5a4ebf32848b24"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    16,
+                    16
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_12",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for npm via the 'NPM_CONFIG_STRICT_SSL' environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG VCS_REF\n",
+                            "value": "VCS_REF",
+                            "__startline__": 16,
+                            "__endline__": 16
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG VCS_REF\n",
+                        "value": "VCS_REF",
+                        "__startline__": 16,
+                        "__endline__": 16,
+                        "resource_type": "ARG",
+                        "hash": "99d88a0040397d60d6eac1c4b7e1063a78ce654fb3f62efb4bea1e353f57ed6b"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    17,
+                    17
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_5",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the PYTHONHTTPSVERIFY environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ENV",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                            "value": "CYPRESS_INSTALL_BINARY=0",
+                            "__startline__": 2,
+                            "__endline__": 2
+                        },
+                        "label_": "resource: ENV",
+                        "id_": "ENV",
+                        "source_": "Dockerfile",
+                        "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                        "value": "CYPRESS_INSTALL_BINARY=0",
+                        "__startline__": 2,
+                        "__endline__": 2,
+                        "resource_type": "ENV",
+                        "hash": "02343cd07ed9afb73ae8076d1cd8a0491a79f389447d37a1dfb1ab857f58eb66"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    3,
+                    3
+                ],
+                "resource": "/src/infra/Dockerfile.ENV",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_5",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the PYTHONHTTPSVERIFY environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_5",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the PYTHONHTTPSVERIFY environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG BUILD_DATE\n",
+                            "value": "BUILD_DATE",
+                            "__startline__": 15,
+                            "__endline__": 15
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG BUILD_DATE\n",
+                        "value": "BUILD_DATE",
+                        "__startline__": 15,
+                        "__endline__": 15,
+                        "resource_type": "ARG",
+                        "hash": "1a5757408cde73c3135a4c72774bd4ddfe9a70806c631e7e5c5a4ebf32848b24"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    16,
+                    16
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_5",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the PYTHONHTTPSVERIFY environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG VCS_REF\n",
+                            "value": "VCS_REF",
+                            "__startline__": 16,
+                            "__endline__": 16
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG VCS_REF\n",
+                        "value": "VCS_REF",
+                        "__startline__": 16,
+                        "__endline__": 16,
+                        "resource_type": "ARG",
+                        "hash": "99d88a0040397d60d6eac1c4b7e1063a78ce654fb3f62efb4bea1e353f57ed6b"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    17,
+                    17
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_1",
+                "bc_check_id": null,
+                "check_name": "Ensure that sudo isn't used",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_8",
+                "bc_check_id": null,
+                "check_name": "Ensure that packages with untrusted or missing signatures are not used by apt-get via the '--allow-unauthenticated' option",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_6",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the NODE_TLS_REJECT_UNAUTHORIZED environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ENV",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                            "value": "CYPRESS_INSTALL_BINARY=0",
+                            "__startline__": 2,
+                            "__endline__": 2
+                        },
+                        "label_": "resource: ENV",
+                        "id_": "ENV",
+                        "source_": "Dockerfile",
+                        "content": "ENV CYPRESS_INSTALL_BINARY=0\n",
+                        "value": "CYPRESS_INSTALL_BINARY=0",
+                        "__startline__": 2,
+                        "__endline__": 2,
+                        "resource_type": "ENV",
+                        "hash": "02343cd07ed9afb73ae8076d1cd8a0491a79f389447d37a1dfb1ab857f58eb66"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        3,
+                        "ENV CYPRESS_INSTALL_BINARY=0\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    3,
+                    3
+                ],
+                "resource": "/src/infra/Dockerfile.ENV",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_6",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the NODE_TLS_REJECT_UNAUTHORIZED environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_6",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the NODE_TLS_REJECT_UNAUTHORIZED environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG BUILD_DATE\n",
+                            "value": "BUILD_DATE",
+                            "__startline__": 15,
+                            "__endline__": 15
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG BUILD_DATE\n",
+                        "value": "BUILD_DATE",
+                        "__startline__": 15,
+                        "__endline__": 15,
+                        "resource_type": "ARG",
+                        "hash": "1a5757408cde73c3135a4c72774bd4ddfe9a70806c631e7e5c5a4ebf32848b24"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        16,
+                        "ARG BUILD_DATE\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    16,
+                    16
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_6",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the NODE_TLS_REJECT_UNAUTHORIZED environment variable",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "ARG",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "ARG VCS_REF\n",
+                            "value": "VCS_REF",
+                            "__startline__": 16,
+                            "__endline__": 16
+                        },
+                        "label_": "resource: ARG",
+                        "id_": "ARG",
+                        "source_": "Dockerfile",
+                        "content": "ARG VCS_REF\n",
+                        "value": "VCS_REF",
+                        "__startline__": 16,
+                        "__endline__": 16,
+                        "resource_type": "ARG",
+                        "hash": "99d88a0040397d60d6eac1c4b7e1063a78ce654fb3f62efb4bea1e353f57ed6b"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        17,
+                        "ARG VCS_REF\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    17,
+                    17
+                ],
+                "resource": "/src/infra/Dockerfile.ARG",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_4",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with the pip '--trusted-host' option",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_11",
+                "bc_check_id": null,
+                "check_name": "Ensure that the '--force-yes' option is not used, as it disables signature validation and allows packages to be downgraded which can leave the system in a broken or inconsistent state",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_15",
+                "bc_check_id": null,
+                "check_name": "Ensure that the yum and dnf package managers are not configured to disable SSL certificate validation via the 'sslverify' configuration option",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_10",
+                "bc_check_id": null,
+                "check_name": "Ensure that packages with untrusted or missing signatures are not used by rpm via the '--nodigest', '--nosignature', '--noverify', or '--nofiledigest' options",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_2",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with curl",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_9",
+                "bc_check_id": null,
+                "check_name": "Ensure that packages with untrusted or missing GPG signatures are not used by dnf, tdnf, or yum via the '--nogpgcheck' option",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_13",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled for npm or yarn by setting the option strict-ssl to false",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_3",
+                "bc_check_id": null,
+                "check_name": "Ensure that certificate validation isn't disabled with wget",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            },
+            {
+                "check_id": "CKV2_DOCKER_7",
+                "bc_check_id": null,
+                "check_name": "Ensure that packages with untrusted or missing signatures are not used by apk via the '--allow-untrusted' option",
+                "check_result": {
+                    "result": "PASSED",
+                    "entity": {
+                        "block_name_": "RUN",
+                        "block_type_": "resource",
+                        "file_path_": "/src/infra/Dockerfile",
+                        "config_": {
+                            "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                            "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                            "__startline__": 4,
+                            "__endline__": 12
+                        },
+                        "label_": "resource: RUN",
+                        "id_": "RUN",
+                        "source_": "Dockerfile",
+                        "content": "RUN npm install --include=dev --no-audit --no-fund \\\n    && npm run build:server \\\n    && npm run sbom \\\n    && npm prune --omit=dev --ignore-scripts \\\n    && npm dedupe --omit=dev --ignore-scripts \\\n    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n    && mkdir -p logs \\\n    && rm -f ftp/legal.md i18n/*.json \\\n    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n",
+                        "value": "npm install --include=dev --no-audit --no-fund     && npm run build:server     && npm run sbom     && npm prune --omit=dev --ignore-scripts     && npm dedupe --omit=dev --ignore-scripts     && rm -rf frontend/node_modules frontend/.angular frontend/src/assets     && mkdir -p logs     && rm -f ftp/legal.md i18n/*.json     && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist",
+                        "__startline__": 4,
+                        "__endline__": 12,
+                        "resource_type": "RUN",
+                        "hash": "22a0fea463bf3f912a8b8100148e7a352945315a0dcecabb3ec893329e569cc4"
+                    },
+                    "evaluated_keys": [
+                        "value"
+                    ]
+                },
+                "code_block": [
+                    [
+                        5,
+                        "RUN npm install --include=dev --no-audit --no-fund \\\n"
+                    ],
+                    [
+                        6,
+                        "    && npm run build:server \\\n"
+                    ],
+                    [
+                        7,
+                        "    && npm run sbom \\\n"
+                    ],
+                    [
+                        8,
+                        "    && npm prune --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        9,
+                        "    && npm dedupe --omit=dev --ignore-scripts \\\n"
+                    ],
+                    [
+                        10,
+                        "    && rm -rf frontend/node_modules frontend/.angular frontend/src/assets \\\n"
+                    ],
+                    [
+                        11,
+                        "    && mkdir -p logs \\\n"
+                    ],
+                    [
+                        12,
+                        "    && rm -f ftp/legal.md i18n/*.json \\\n"
+                    ],
+                    [
+                        13,
+                        "    && chown -R 65532:65532 logs data ftp uploads i18n frontend/dist\n"
+                    ]
+                ],
+                "file_path": "/src/infra/Dockerfile",
+                "file_abs_path": "/src/infra/Dockerfile",
+                "repo_file_path": "/src/infra/Dockerfile",
+                "file_line_range": [
+                    5,
+                    13
+                ],
+                "resource": "/src/infra/Dockerfile.RUN",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": null,
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "check_len": null,
+                "definition_context_file_path": null
+            }
+        ],
+        "failed_checks": [],
+        "skipped_checks": [],
+        "parsing_errors": []
+    },
+    "summary": {
+        "passed": 41,
+        "failed": 0,
+        "skipped": 0,
+        "parsing_errors": 0,
+        "resource_count": 1,
+        "checkov_version": "3.4.7"
+    },
+    "url": "Add an api key '--bc-api-key <api-key>' to see more detailed insights via https://bridgecrew.cloud"
+}

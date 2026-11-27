@@ -1,0 +1,106 @@
+[
+    {
+        "Id": "sha256:c7e421ad7d945b2d8da132cedb9c5cea7d48f7b741d6fbb41f000e9001199211",
+        "RepoTags": [
+            "juice-shop:db8e35ede0cdf1e8ce7b5a4e8987e8bdb6bc936c"
+        ],
+        "RepoDigests": [],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-11-26T20:50:05.146405195Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "65532:65532",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3000/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+            ],
+            "Cmd": [
+                "/juice-shop/build/app.js"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/nodejs/bin/node",
+                    "-e",
+                    "require('node:http').get('http://127.0.0.1:3000/', r => { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"
+                ],
+                "Interval": 15000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 120000000000,
+                "Retries": 5
+            },
+            "ArgsEscaped": true,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/juice-shop",
+            "Entrypoint": [
+                "/nodejs/bin/node"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.created": "2026-11-26T20:47:09Z",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision": "db8e35ede0cdf1e8ce7b5a4e8987e8bdb6bc936c",
+                "org.opencontainers.image.title": "OWASP Juice Shop - laboratorio SSDLC",
+                "org.opencontainers.image.version": "20.3.0"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 349283924,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/6fb2993e73275e47340e4bb0fc908fad2b2b31ff43a9762f7ecbe277b86f2f95/diff:/var/lib/docker/overlay2/fedccbf2fc8ea836088ca51b41e2b82b97cfc3a55962176fc033b7284e17f445/diff:/var/lib/docker/overlay2/18952d9bac4af65a00f42bf879757bed4958003e8262918f1b29be7ba0ba5072/diff:/var/lib/docker/overlay2/84544175573c1a1442bbcc048b614e2ab4cb14c23fbcc18228198384e21a65bd/diff:/var/lib/docker/overlay2/711f093cad8bf0773535b16be916cc713c5b36d3428d37f14b6909f605394e5e/diff:/var/lib/docker/overlay2/69c343a890ffdeecda4d65bb234c659c6460ead3bdbff6f5cc983503129864e0/diff:/var/lib/docker/overlay2/50cbd146494934b5d89c358fa62985a1342911da1f671481b44c76377aa4dd64/diff:/var/lib/docker/overlay2/b56e22881ad37f96aa3e4c6b529382b91abac4e93b2ddc8e331155e3a7ad847a/diff:/var/lib/docker/overlay2/7c3f48980132938d46aff3d3522f6febff267d4414a577d611ebcf3b44e10edf/diff:/var/lib/docker/overlay2/b5a7a067aa587a0f539ae30e49a7321ff03bab16419818d80ad5b98fef6ecf0b/diff:/var/lib/docker/overlay2/ebbb3f7c38b7f70c4eb9b934e02b3ff5188e052ca0688cba9a5a9e7876dcb802/diff:/var/lib/docker/overlay2/a1f232fea2ff1876a06362d7b21baba6f0a75e4ddb4700df5b263252276e663a/diff:/var/lib/docker/overlay2/21727cc669dd2a2f69da812ab454f8efb0f722d607668172c37658e76ff09569/diff:/var/lib/docker/overlay2/787f9eea1ba2ed037db8a67e3e40df7ab734a5747817691b825f6cda66e29bac/diff:/var/lib/docker/overlay2/2b2d344f8e7406d03a685edc4cb65fb3f74ca35c3f968206d88fe531258696ed/diff:/var/lib/docker/overlay2/1635acc1c962d786e47e3fb40d476d248078428dd291037770d8aed23f81339d/diff:/var/lib/docker/overlay2/b1e3af431285f879872b12e04292dc1caead021c4ce4c7839a13a52a900a0d83/diff:/var/lib/docker/overlay2/60a9f7c5fa4284094da35234c471eb64d7538b717e9ec6bd7e1c824288d8334f/diff:/var/lib/docker/overlay2/bdfebf8ab6e15fbdef3bf0ccf327072ca2bff3bf21dfda232356683929befdaf/diff:/var/lib/docker/overlay2/0ee8547976f7d910746b07a3b1829c53afb826bf73df7740554a210eea8c1cce/diff:/var/lib/docker/overlay2/b134f9a9908bb500880da3fa9018c960471d5262c0ae00640468509af3221962/diff:/var/lib/docker/overlay2/630e61bb645197ef6ad047b883e420cc5fa8b3370c9ff2de787567c9ae1ab94c/diff:/var/lib/docker/overlay2/543dff1bb26cd07d24d8788e3711af5531f189faf5d5d0531611d57d2284c690/diff",
+                "MergedDir": "/var/lib/docker/overlay2/e7f686640739e113c5ea9f28f290154aa15960d8c7e1627b3e9d84f7508745fc/merged",
+                "UpperDir": "/var/lib/docker/overlay2/e7f686640739e113c5ea9f28f290154aa15960d8c7e1627b3e9d84f7508745fc/diff",
+                "WorkDir": "/var/lib/docker/overlay2/e7f686640739e113c5ea9f28f290154aa15960d8c7e1627b3e9d84f7508745fc/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:a840dc2895e4fad2818f1924cbc18b764eedb5ef8e014ac085b9f70532578c48",
+                "sha256:621c35e751a51a9a9dc3e80aa0b7fe8be2a93402ea6ccd307d30852cd7776cda",
+                "sha256:b64fe4bb89ff075efc03878811052cbaf4f9dd891aed968e9ed6993fedf1f4a7",
+                "sha256:b5764396d8d3f88c6c91b8e97022f147ec721afcf85710d96775922e0df881af",
+                "sha256:275a30dd8ce958b21daa9ad962c6fbc09f98306ee2f486b65c9075dc257b1412",
+                "sha256:4d049f83d9cf21d1f5cc0e11deaf36df02790d0e60c1a3829538fb4b61685368",
+                "sha256:af5aa97ebe6ce1604747ec1e21af7136ded391bcabe4acef882e718a87c86bcc",
+                "sha256:6f1cdceb6a3146f0ccb986521156bef8a422cdbb0863396f7f751f575ba308f4",
+                "sha256:bd3cdfae1d3fdd83a2231d608969b38b82349777c2fff9a7c12d54f8ac5c9b38",
+                "sha256:4cde6b0bb6f50a5f255eef7b2a42162c661cf776b803225dcac9a659e396bb6b",
+                "sha256:ad51d0769d16ba578106a177987dfe3d2e02c1668c852b795b2f6b024068242a",
+                "sha256:f0e42608573850bddc6e1dcabb8a6ea34676a336964b3dbf006a4451f448be9f",
+                "sha256:0762a1f6557d1e88a761ab05aa7f65a10dc0e559913ea13befb873d907e1a396",
+                "sha256:eb7b5a19da3099c4f80908ddbf7078de1af8539077af1101c19e1eb587795ca4",
+                "sha256:8fecad3c026d3540cea5ccf82374c4d9cd94a4c2d275f0faf9e7515f34a8b666",
+                "sha256:c0e409312adc366898967307565f692bb33d43a439d3de48e27d14b742389725",
+                "sha256:2e7e048c8b43ab2a1f69ee041025502f890b3faaee2053015a3c3e7256d9ec25",
+                "sha256:1f5d28bd51650f429293f7730ede274b81dc0744aa918bc887133c4ad610258c",
+                "sha256:6e18ad80f3d64a8cbbcd1ff2e8a0d5ce7282cf664e816b86183a59d30a618e8a",
+                "sha256:c16b2ec4b1493bad1b1de23d659c899e60abb166bda756d02792f0a03ba54a43",
+                "sha256:7db505d90756626f425c6c5468eca565c82f589b144ecaa4f411ad9bbf79e614",
+                "sha256:f29ad80e1401e0516f9b969f0ec179d9d418c58bf001f6828ea1ca3a24055240",
+                "sha256:f8a0efe3b24d1752c9da4d91bff3da04f9524dacb2acef98a9a2c08f79d23ca4",
+                "sha256:6b690874c058b9280768c097a2888aad06831961d7bfce954ddf98cebc2ae772"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]

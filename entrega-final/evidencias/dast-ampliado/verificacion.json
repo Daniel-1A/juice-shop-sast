@@ -1,0 +1,49 @@
+{
+  "run": 45848068189,
+  "conclusion": "success",
+  "headSHA": "d2e1032727ee30ae0ede9926533ffff453b2e2b9",
+  "image": "sha256:699edb8d327065451221c4f98b6bbabdb4d076a8c5f566773db05346f01c4966",
+  "artifactSHA256": "5a54318c68a7e498cd5d04f7aad618f8ab8c0a5a91ac671143aeadc2bb9be48c",
+  "modes": [
+    {
+      "mode": "baseline",
+      "passed": true,
+      "urls": 47,
+      "alertTypes": 3,
+      "successfulResponses": 31,
+      "authenticated": false,
+      "apiVerified": null,
+      "activeScanLimitMinutes": 5
+    },
+    {
+      "mode": "authenticated",
+      "passed": true,
+      "urls": 109,
+      "alertTypes": 4,
+      "successfulResponses": 73,
+      "authenticated": true,
+      "apiVerified": false,
+      "activeScanLimitMinutes": 5
+    },
+    {
+      "mode": "full",
+      "passed": true,
+      "urls": 109,
+      "alertTypes": 5,
+      "successfulResponses": 414,
+      "authenticated": true,
+      "apiVerified": false,
+      "activeScanLimitMinutes": 5
+    },
+    {
+      "mode": "api",
+      "passed": true,
+      "urls": 49,
+      "alertTypes": 6,
+      "successfulResponses": 381,
+      "authenticated": true,
+      "apiVerified": true,
+      "activeScanLimitMinutes": 5
+    }
+  ]
+}

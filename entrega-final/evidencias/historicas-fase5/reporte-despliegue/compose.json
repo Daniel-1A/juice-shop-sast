@@ -1,0 +1,56 @@
+{
+  "name": "juice-shop-lab",
+  "networks": {
+    "default": {
+      "name": "juice-shop-lab_default",
+      "ipam": {}
+    }
+  },
+  "services": {
+    "juice-shop": {
+      "build": {
+        "context": "/home/runner/work/juice-shop-sast/juice-shop-sast",
+        "dockerfile": "infra/Dockerfile"
+      },
+      "cap_drop": [
+        "ALL"
+      ],
+      "cpus": 2,
+      "command": null,
+      "entrypoint": null,
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "/nodejs/bin/node",
+          "-e",
+          "require('node:http').get('http://127.0.0.1:3000/', r =\u003e { r.resume(); process.exit(r.statusCode === 200 ? 0 : 1) }).on('error', () =\u003e process.exit(1))"
+        ],
+        "timeout": "5s",
+        "interval": "15s",
+        "retries": 5,
+        "start_period": "2m0s"
+      },
+      "image": "juice-shop:local",
+      "init": true,
+      "mem_limit": "1073741824",
+      "networks": {
+        "default": null
+      },
+      "pids_limit": 256,
+      "ports": [
+        {
+          "mode": "ingress",
+          "host_ip": "127.0.0.1",
+          "target": 3000,
+          "published": "3000",
+          "protocol": "tcp"
+        }
+      ],
+      "restart": "no",
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "user": "65532:65532"
+    }
+  }
+}
