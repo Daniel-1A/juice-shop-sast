@@ -34,13 +34,33 @@ Genera SARIF y HTML. El primero se publica en Security > Code scanning; ambos se
 desde el artefacto `bearer-reports` de Actions. Las cargas usan `if: always()`.
 Una carga fallida o un reporte ausente siguen produciendo un fallo visible del workflow.
 
-## Demostración
+## Demostración realizada
 
-La rama `demo-vulnerabilidad` añadirá un handler de laboratorio en `routes/demoCalculator.js`.
-El primer commit evaluará una expresión de la petición con `eval` para observar el hallazgo SAST.
-La corrección sustituirá esa evaluación por operaciones numéricas de una gramática limitada.
-El handler se usa como muestra estática: no se registra en el servidor ni crea un reto de Juice Shop.
-La evidencia del PR debe conservar ambos commits y el estado de la alerta antes y después.
+PR: https://github.com/Daniel-1A/juice-shop-sast/pull/1
+
+La rama `demo-vulnerabilidad` conserva el commit vulnerable y el commit de corrección.
+En `routes/demoCalculator.js`, el primer commit usa `eval(req.query.expression)` en la línea 6.
+Bearer lo detectó localmente como `javascript_lang_eval_user_input`, critical, CWE-95.
+El análisis completo del PR detectó 398 hallazgos: los 397 de main más esta vulnerabilidad.
+La alerta se puede consultar en https://github.com/Daniel-1A/juice-shop-sast/security/code-scanning/398.
+
+La corrección elimina `eval` y solo permite sumar o restar dos números, validando tipo,
+longitud, gramática y resultado finito. El nuevo análisis local de la muestra no reporta hallazgos.
+El handler es una muestra estática: no está registrado en el servidor ni crea un reto de Juice Shop.
+
+```powershell
+node --test test/sast/demo-calculator.test.cjs
+```
+
+Resultado de las pruebas: antes, 2 aprobadas y 8 fallidas; después, 10 aprobadas y 0 fallidas.
+Los reportes de ambos escaneos y pruebas están en `reports/` y se entregan por separado.
+La suite completa de Juice Shop y su lint se intentaron, pero no se ejecutaron por falta de
+`eslint` y Angular CLI (`ng`): no se instalaron las dependencias de ejecución de la aplicación.
+El flujo SAST no necesita esas dependencias.
+
+La línea base local y la de CI coinciden en las 397 combinaciones de regla, archivo y línea.
+El filtro `critical,high` produce 43 hallazgos. Se mantienen los ejemplos de `data/static/codefixes`.
+El PR se deja abierto para conservar la demostración; no se integra ni se despliega la muestra vulnerable.
 
 ## Fuentes
 
